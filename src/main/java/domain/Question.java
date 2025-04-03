@@ -1,5 +1,8 @@
 package domain;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Question {
     private long id;
     private String question, difficulty;
