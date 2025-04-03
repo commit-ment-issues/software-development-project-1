@@ -4,7 +4,7 @@ public class Question {
     private long id;
     private String question, difficulty;
 
-    public Question( String question, String difficulty) {
+    public Question(String question, String difficulty) {
         this.question = question;
         this.difficulty = difficulty;
     }
