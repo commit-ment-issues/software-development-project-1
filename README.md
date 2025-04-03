@@ -4,7 +4,7 @@ Quizzer is a web application designed for teachers to create and manage quizzes 
 
 ## Team Members
 
-- Markus Mäntylä
+- [Markus Mäntylä](https://github.com/MarkusMant)
 - [Robbie Winter](https://github.com/robbiewinter)
 - [Meeri Klemola](https://github.com/MeeriKlemola)
 - [Kaisla Kudjoi](https://github.com/kaislakudjoi)
