@@ -13,6 +13,15 @@ public class Answers {
     private String text;
     private Integer status;
 
+    public Answers(){
+        
+    }
+
+    public Answers(Long id, String text, Integer status) {
+        this.text = text;
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }
