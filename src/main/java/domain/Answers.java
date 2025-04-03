@@ -14,10 +14,10 @@ public class Answers {
     private Integer status;
 
     public Answers(){
-        
+
     }
 
-    public Answers(Long id, String text, Integer status) {
+    public Answers(String text, Integer status) {
         this.text = text;
         this.status = status;
     }
