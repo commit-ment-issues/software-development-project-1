@@ -13,6 +13,9 @@ public class Question {
 
     private String question, difficulty;
 
+    public Question() {
+    }
+
     public Question(String question, String difficulty) {
         this.question = question;
         this.difficulty = difficulty;
@@ -42,13 +45,5 @@ public class Question {
         this.difficulty = difficulty;
     }
 
-    @Override
-    public String toString() {
-        return "Question{" +
-                "id=" + id +
-                ", question='" + question + '\'' +
-                ", difficulty='" + difficulty + '\'' +
-                '}';
-    }
 
 }
