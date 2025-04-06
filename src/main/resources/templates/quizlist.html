@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -22,12 +22,15 @@
             <td th:text="${quiz.name}"></td>
             <td th:text="${quiz.description}"></td>
             <td th:text="${quiz.courseCode}"></td>
-            <td th:text="${quiz.publishedStatus}"></td>
-            <!-- todo add added on date-->
+            <td>
+                <span th:if="${quiz.publishedStatus == 1}">Published</span>
+                <span th:if="${quiz.publishedStatus != 1}">Not published</span>
+            </td>
+            <td th:text="${quiz.creationDate}"></td>
 
         </tr>
         </table>
-        <a href="">Add a quiz</a>
+        <a href="/addquiz">Add a quiz</a>
 
 </body>
 
