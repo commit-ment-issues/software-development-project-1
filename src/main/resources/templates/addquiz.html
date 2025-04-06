@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a Quiz</title>
+</head>
+<body>
+    <h1>Add a quiz</h1>
+
+    <form th:action="@{/quiz/save}" th:object="${quiz}" method="post">
+
+        <label for="name">Name</label><br>
+        <input type="text" id="name" th:field="*{name}" /><br><br>
+
+        <label for="description">Description</label><br>
+        <textarea id="description" rows="3" th:field="*{description}"></textarea><br><br>
+
+        <label for="courseCode">Course code</label><br>
+        <input type="text" id="courseCode" th:field="*{courseCode}" /><br><br>
+
+        <label>
+            <input type="checkbox" th:field="*{publishedStatus}" value="1" />
+            Published
+        </label><br><br>
+
+        <button type="submit">Add</button>
+        <a href="/quizlist"><button type="button">Cancel</button></a>
+
+
+    </form>
+</body>
+</html>
