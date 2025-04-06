@@ -1,11 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizlist</title>
 </head>
+
 <body>
-    
+    <h1>Quizzers</h1>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Course</th>
+            <th>Published</th>
+            <th>Added on</th>
+        </tr>
+        <tr th:each="quiz : ${quizzes}">
+            <td th:text="${quiz.name}"></td>
+            <td th:text="${quiz.description}"></td>
+            <td th:text="${quiz.courseCode}"></td>
+            <td th:text="${quiz.publishedStatus}"></td>
+            <!-- todo add added on date-->
+
+        </tr>
+        </table>
+
 </body>
+
 </html>
