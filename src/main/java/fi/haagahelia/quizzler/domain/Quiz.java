@@ -1,5 +1,7 @@
 package fi.haagahelia.quizzler.domain;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,15 +18,17 @@ public class Quiz {
     private String description;
     private String courseCode;
     private Integer publishedStatus;
+    private LocalDate creationDate;
     
     public Quiz() {
     }
 
-    public Quiz(String name, String description, String courseCode, Integer publishedStatus) {
+    public Quiz(String name, String description, String courseCode, Integer publishedStatus, LocalDate creationDate) {
         this.name = name;
         this.description = description;
         this.courseCode = courseCode;
         this.publishedStatus = publishedStatus;
+        this.creationDate = creationDate;
     }
 
     public Long getId() {
@@ -67,5 +71,12 @@ public class Quiz {
         this.publishedStatus = publishedStatus;
     }
 
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
     
 }
