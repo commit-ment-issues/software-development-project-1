@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -36,6 +37,12 @@ public class QuizzlerController {
             quiz.setPublishedStatus(0);
         }
         quizRepository.save(quiz);
+        return "redirect:/quizlist";
+    }
+
+    @RequestMapping(value = "/quiz/delete/{id}", method = RequestMethod.GET)
+    public String deleteQuiz(@PathVariable("id") Long id) {
+        quizRepository.deleteById(id);
         return "redirect:/quizlist";
     }
 
