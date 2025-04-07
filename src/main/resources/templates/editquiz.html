@@ -10,34 +10,42 @@
 </head>
 
 <body>
+    <div class="container text-center">
     <h1>Edit quiz</h1>
-    <form th:object="${quiz}" th:action="@{/quiz/save}" method="post">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <form th:object="${quiz}" th:action="@{/quiz/save}" method="post">
 
-        <input type="hidden" th:field="*{Id}" />
+                    <input type="hidden" th:field="*{Id}" />
 
-        <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control w-50" id="name" th:field="*{name}" />
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control w-50" id="name" th:field="*{name}" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea id="description" rows="3" class="form-control w-50" th:field="*{description}"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="courseCode" class="form-label">Course code</label>
+                        <input type="text" class="form-control w-50" id="courseCode" th:field="*{courseCode}" />
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" th:field="*{publishedStatus}" value="1" />
+                        <label class="form-check-label">Published</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Update quiz</button>
+                    <a href="/quizlist"><button type="button" class="btn btn-danger">Cancel</button></a>
+                </form>
+            </div>
         </div>
-
-        <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea id="description" rows="3" class="form-control w-50" th:field="*{description}"></textarea>
-        </div>
-
-        <div class="mb-3">
-            <label for="courseCode" class="form-label">Course code</label>
-            <input type="text" class="form-control w-50" id="courseCode" th:field="*{courseCode}" />
-        </div>
-
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" th:field="*{publishedStatus}" value="1" />
-            <label class="form-check-label">Published</label>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Update quiz</button>
-        <a href="/quizlist"><button type="button" class="btn btn-danger">Cancel</button></a>
-    </form>
+    </div>
 </body>
 
 </html>
