@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <title>Edit Quiz</title>
+</head>
+
+<body>
+    <h1>Edit quiz</h1>
+    <form th:object="${quiz}" th:action="@{/quiz/save}" method="post">
+
+        <input type="hidden" th:field="*{Id}" />
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control w-50" id="name" th:field="*{name}" />
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" rows="3" class="form-control w-50" th:field="*{description}"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="courseCode" class="form-label">Course code</label>
+            <input type="text" class="form-control w-50" id="courseCode" th:field="*{courseCode}" />
+        </div>
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" th:field="*{publishedStatus}" value="1" />
+            <label class="form-check-label">Published</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update quiz</button>
+        <a href="/quizlist"><button type="button" class="btn btn-danger">Cancel</button></a>
+    </form>
+</body>
+
+</html>
