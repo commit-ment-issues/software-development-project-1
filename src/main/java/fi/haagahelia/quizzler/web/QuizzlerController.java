@@ -46,4 +46,11 @@ public class QuizzlerController {
         return "redirect:/quizlist";
     }
 
+    @GetMapping("/quiz/edit/{id}")
+    public String editQuizForm(@PathVariable("id") Long Id, Model model) {
+        model.addAttribute("quiz", quizRepository.findById(Id));
+
+        return "editquiz"; // editquiz.html
+    }
+
 }
