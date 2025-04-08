@@ -17,6 +17,12 @@
                 <th>Question text</th>
                 <th>Difficulty</th>
             </thead>
+            <tbody>
+                <tr th:each="question : ${questions}">
+                    <td th:text="${question.question}"></td>
+                    <td th:text="${question.difficulty}"></td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </body>
