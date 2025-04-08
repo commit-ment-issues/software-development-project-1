@@ -1,5 +1,6 @@
 package fi.haagahelia.quizzler.web;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import fi.haagahelia.quizzler.domain.Answers;
+import fi.haagahelia.quizzler.domain.AnswersRepository;
+import fi.haagahelia.quizzler.domain.Question;
+import fi.haagahelia.quizzler.domain.QuestionRepository;
 import fi.haagahelia.quizzler.domain.Quiz;
 import fi.haagahelia.quizzler.domain.QuizRepository;
 
@@ -17,6 +22,12 @@ public class QuizzlerController {
 
     @Autowired
     QuizRepository quizRepository;
+
+    @Autowired
+    QuestionRepository questionRepository;
+
+    @Autowired
+    AnswersRepository answersRepository;
 
     @RequestMapping(value = { "/quizlist" })
     public String showQuizList(Model model) {
@@ -33,18 +44,18 @@ public class QuizzlerController {
         }
 
         model.addAttribute("quiz", quiz);
+        model.addAttribute("questions", quiz.getQuestions());
         return "questionlist";
     }
 
     @GetMapping("/question/{id}/answers")
-    public String showQuestionAnswers(@PathVariable("id") Long answerId, Model model) {
-        Quiz quiz = quizRepository.findById(answerId).orElse(null);
-
-        if (quiz == null) {
-            return "redirect:/questionlist";
-        }
-
-        model.addAttribute("quiz", quiz);
+    public String showAnswers(@PathVariable("id") Long questionId, Model model) {
+        Question question = questionRepository.findById(questionId).orElse(null);
+        Answers answers = answersRepository.findByQuestionQuestionId(questionId);
+    
+        model.addAttribute("question", question);
+        model.addAttribute("answers", answers);
+    
         return "answerlist";
     }
 
