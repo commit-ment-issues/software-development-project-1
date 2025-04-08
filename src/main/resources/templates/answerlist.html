@@ -18,7 +18,7 @@
                 <th>Correctness</th>
             </thead>
             <tbody>
-                <tr th:each="answer : ${answers}">
+                <tr th:each="answers : ${answers}">
                     <td th:text="${answers.text}"></td>
                     <td th:text="${answers.status}"></td>
                 </tr>
@@ -26,3 +26,4 @@
         </table>
     </div>
 </body>
+</html>
