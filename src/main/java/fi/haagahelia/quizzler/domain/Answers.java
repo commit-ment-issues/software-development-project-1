@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Answers {
@@ -15,7 +18,11 @@ public class Answers {
     private String text;
     private Integer status;
 
-    public Answers(){
+    @OneToOne
+    @JoinColumn(name = "questionId")
+    private Question question;
+
+    public Answers() {
 
     }
 
@@ -48,9 +55,14 @@ public class Answers {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "Answers [id=" + id + ", text=" + text + ", status=" + status + "]";
+    public Question getQuestion() {
+        return question;
     }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    
 
 }
