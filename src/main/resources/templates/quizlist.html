@@ -20,11 +20,12 @@
                 <th>Course</th>
                 <th>Published</th>
                 <th>Date</th>
-                <th>Actions</th>
+                <th></th>
+                <th></th>
             </thead>
             <tbody>
                 <tr th:each="quiz : ${quizzes}">
-                    <td th:text="${quiz.name}"></td>
+                    <td><a href="" th:text="${quiz.name}"></a></td>
                     <td th:text="${quiz.description}"></td>
                     <td th:text="${quiz.courseCode}"></td>
                     <td>
