@@ -1,6 +1,5 @@
 package fi.haagahelia.quizzler;
 
-
 import java.time.LocalDate;
 
 import org.slf4j.Logger;
@@ -10,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import fi.haagahelia.quizzler.domain.Question;
+import fi.haagahelia.quizzler.domain.QuestionRepository;
 import fi.haagahelia.quizzler.domain.Quiz;
 import fi.haagahelia.quizzler.domain.QuizRepository;
 
@@ -22,13 +23,30 @@ public class QuizzlerApplication {
 	}
 
 	@Bean
-	public CommandLineRunner quizDemo(QuizRepository quizRepo){
+	public CommandLineRunner quizDemo(QuizRepository quizRepo, QuestionRepository questionRepo) {
 		return args -> {
 			log.info("Adding some demo data");
-			quizRepo.save(new Quiz("first quiz", "test", "ABC123", 1,LocalDate.of(2025, 4, 7)));
-			quizRepo.save(new Quiz("second quiz", "test", "ABC567", 1,LocalDate.of(2025, 4, 7)));
-			quizRepo.save(new Quiz("third quiz", "test", "ABC8910", 1,LocalDate.of(2025, 4, 7)));
-			quizRepo.save(new Quiz("fourth quiz", "test", "ABC111213", 1,LocalDate.of(2025, 4, 7)));
+			Quiz quiz1 = new Quiz("first quiz", "test", "ABC123", 1, LocalDate.of(2025, 4, 7));
+			Quiz quiz2 = new Quiz("second quiz", "test", "ABC567", 1, LocalDate.of(2025, 4, 7));
+			Quiz quiz3 = new Quiz("third quiz", "test", "ABC890", 1, LocalDate.of(2025, 4, 7));
+			Quiz quiz4 = new Quiz("fourth quiz", "test", "ABC123", 1, LocalDate.of(2025, 4, 7));
+
+			quizRepo.save(quiz1);
+			quizRepo.save(quiz2);
+			quizRepo.save(quiz3);
+			quizRepo.save(quiz4);
+
+			Question question1 = new Question("What is Java?", "easy");
+			question1.setQuiz(quiz1);
+			Question question2 = new Question("What is Spring Boot?", "medium");
+			question2.setQuiz(quiz1);
+			Question question3 = new Question("Explain Dependency Injection", "hard");
+			question3.setQuiz(quiz1);
+
+			questionRepo.save(question1);
+			questionRepo.save(question2);
+			questionRepo.save(question3);
+
 		};
 	}
 
