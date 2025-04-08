@@ -22,10 +22,9 @@ public class Question {
     public Question() {
     }
 
-    public Question(String question, String difficulty, Quiz quiz) {
+    public Question(String question, String difficulty) {
         this.question = question;
         this.difficulty = difficulty;
-        this.quiz = quiz;
     }
 
     public long getQuestionId() {
