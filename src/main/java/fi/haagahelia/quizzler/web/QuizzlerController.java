@@ -19,9 +19,21 @@ public class QuizzlerController {
     QuizRepository quizRepository;
 
     @RequestMapping(value = { "/quizlist" })
-    public String quizList(Model model) {
+    public String showQuizList(Model model) {
         model.addAttribute("quizzes", quizRepository.findAll());
         return "quizlist";
+    }
+
+    @GetMapping("/quiz/{id}/questions")
+    public String showQuizQuestions(@PathVariable("id") Long id, Model model) {
+        Quiz quiz = quizRepository.findById(id).orElse(null);
+
+        if (quiz == null) {
+            return "redirect:/quizlist";
+        }
+
+        model.addAttribute("quiz", quiz);
+        return "questionlist";
     }
 
     @GetMapping("/addquiz")
