@@ -36,6 +36,18 @@ public class QuizzlerController {
         return "questionlist";
     }
 
+    @GetMapping("/question/{id}/answers")
+    public String showQuestionAnswers(@PathVariable("id") Long answerId, Model model) {
+        Quiz quiz = quizRepository.findById(answerId).orElse(null);
+
+        if (quiz == null) {
+            return "redirect:/questionlist";
+        }
+
+        model.addAttribute("quiz", quiz);
+        return "answerlist";
+    }
+
     @GetMapping("/addquiz")
     public String showAddQuizForm(Model model) {
         model.addAttribute("quiz", new Quiz());
