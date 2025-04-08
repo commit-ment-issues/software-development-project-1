@@ -18,7 +18,7 @@
             <div class="col-md-6 mx-auto">
                 <form th:object="${quiz}" th:action="@{/quiz/save}" method="post">
 
-                    <input type="hidden" th:field="*{Id}" />
+                    <input type="hidden" th:field="*{quizId}" />
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>

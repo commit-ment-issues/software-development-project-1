@@ -25,8 +25,8 @@ public class QuizzlerController {
     }
 
     @GetMapping("/quiz/{id}/questions")
-    public String showQuizQuestions(@PathVariable("id") Long id, Model model) {
-        Quiz quiz = quizRepository.findById(id).orElse(null);
+    public String showQuizQuestions(@PathVariable("id") Long quizId, Model model) {
+        Quiz quiz = quizRepository.findById(quizId).orElse(null);
 
         if (quiz == null) {
             return "redirect:/quizlist";
@@ -53,14 +53,14 @@ public class QuizzlerController {
     }
 
     @RequestMapping(value = "/quiz/delete/{id}", method = RequestMethod.GET)
-    public String deleteQuiz(@PathVariable("id") Long id) {
-        quizRepository.deleteById(id);
+    public String deleteQuiz(@PathVariable("id") Long quizId) {
+        quizRepository.deleteById(quizId);
         return "redirect:/quizlist";
     }
 
     @GetMapping("/quiz/edit/{id}")
-    public String editQuizForm(@PathVariable("id") Long Id, Model model) {
-        model.addAttribute("quiz", quizRepository.findById(Id));
+    public String editQuizForm(@PathVariable("id") Long quizId, Model model) {
+        model.addAttribute("quiz", quizRepository.findById(quizId));
 
         return "editquiz"; // editquiz.html
     }

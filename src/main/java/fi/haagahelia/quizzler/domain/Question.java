@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Question {
@@ -12,6 +14,10 @@ public class Question {
     private long id;
 
     private String question, difficulty;
+
+    @ManyToOne
+    @JoinColumn(name = "quizId")
+    private Quiz quiz;
 
     public Question() {
     }

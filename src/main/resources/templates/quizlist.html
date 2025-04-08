@@ -25,7 +25,7 @@
             </thead>
             <tbody>
                 <tr th:each="quiz : ${quizzes}">
-                    <td><a href="@{/quiz/{id}/questions(id=${quiz.id})}" th:text="${quiz.name}"></a></td>
+                    <td><a href="@{/quiz/{id}/questions(id=${quiz.quizId})}" th:text="${quiz.name}"></a></td>
                     <td th:text="${quiz.description}"></td>
                     <td th:text="${quiz.courseCode}"></td>
                     <td>
@@ -34,12 +34,12 @@
                     </td>
                     <td th:text="${quiz.creationDate}"></td>
                     <td>
-                        <a th:href="@{/quiz/edit/{id}(id=${quiz.Id})}" class="btn btn-warning">
+                        <a th:href="@{/quiz/edit/{id}(id=${quiz.quizId})}" class="btn btn-warning">
                             Edit
                         </a>
                     </td>
                     <td>
-                        <a th:href="@{/quiz/delete/{id}(id=${quiz.id})}" class="btn btn-danger"
+                        <a th:href="@{/quiz/delete/{id}(id=${quiz.quizId})}" class="btn btn-danger"
                             onclick="return confirm('Are you sure you want to delete this quiz?');">
                             Delete
                         </a>
