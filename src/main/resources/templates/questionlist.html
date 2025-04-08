@@ -19,7 +19,7 @@
             </thead>
             <tbody>
                 <tr th:each="question : ${questions}">
-                    <td th:text="${question.question}"></td>
+                    <td><a th:href="@{/question/{id}/answers(id=${question.questionId})}" th:text="${question.question}"></a></td>
                     <td th:text="${question.difficulty}"></td>
                 </tr>
             </tbody>
