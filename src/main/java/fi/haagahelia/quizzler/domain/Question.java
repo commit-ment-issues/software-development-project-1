@@ -13,7 +13,7 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long questionId;
 
-    private String question, difficulty;
+    private String questionText, difficulty;
 
     @ManyToOne
     @JoinColumn(name = "quizId")
@@ -22,8 +22,8 @@ public class Question {
     public Question() {
     }
 
-    public Question(String question, String difficulty) {
-        this.question = question;
+    public Question(String questionText, String difficulty) {
+        this.questionText = questionText;
         this.difficulty = difficulty;
     }
 
@@ -35,12 +35,12 @@ public class Question {
         this.questionId = questionId;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getQuestionText() {
+        return questionText;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
     }
 
     public String getDifficulty() {

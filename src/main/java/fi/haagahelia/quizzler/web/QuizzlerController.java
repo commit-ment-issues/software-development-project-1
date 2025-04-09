@@ -88,4 +88,31 @@ public class QuizzlerController {
         return "editquiz"; // editquiz.html
     }
 
+
+
+    @GetMapping("/quiz/{id}/addquestion")
+    public String showAddQuestionForm(@PathVariable("id") Long quizId, Model model) {
+        Quiz quiz = quizRepository.findById(quizId).orElse(null);
+    
+        if (quiz == null) {
+            return "redirect:/quizlist";
+        }
+    
+        model.addAttribute("quizId", quizId);
+        model.addAttribute("question", new Question());
+        return "addquestion";
+    }
+
+    @RequestMapping(value = "/quiz/{id}/savequestion", method = RequestMethod.POST)
+    public String saveQuestion(@PathVariable("id") Long quizId, @ModelAttribute Question question) {
+        Quiz quiz = quizRepository.findById(quizId).orElse(null);
+
+        if (quiz == null) {
+            return "redirect:/quizlist";
+        }
+
+        question.setQuiz(quiz);
+        questionRepository.save(question);
+        return "redirect:/quiz/" + quizId + "/questions";
+    }   
 }

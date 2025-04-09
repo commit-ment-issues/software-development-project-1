@@ -19,10 +19,12 @@
             </thead>
             <tbody>
                 <tr th:each="question : ${questions}">
-                    <td><a th:href="@{/question/{id}/answers(id=${question.questionId})}" th:text="${question.question}"></a></td>
+                    <td><a th:href="@{/question/{id}/answers(id=${question.questionId})}" th:text="${question.questionText}"></a></td>
                     <td th:text="${question.difficulty}"></td>
                 </tr>
             </tbody>
         </table>
+        <a th:href="@{/quiz/{id}/addquestion(id=${quiz.quizId})}" class="btn btn-success">Add question</a>
+        <a th:href="@{/quizlist}" class="btn btn-danger">Back to quiz list</a>
     </div>
 </body>
