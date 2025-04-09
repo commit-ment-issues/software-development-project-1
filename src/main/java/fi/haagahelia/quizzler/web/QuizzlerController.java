@@ -1,6 +1,5 @@
 package fi.haagahelia.quizzler.web;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,10 +51,10 @@ public class QuizzlerController {
     public String showAnswers(@PathVariable("id") Long questionId, Model model) {
         Question question = questionRepository.findById(questionId).orElse(null);
         Answers answers = answersRepository.findByQuestionQuestionId(questionId);
-    
+
         model.addAttribute("question", question);
         model.addAttribute("answers", answers);
-    
+
         return "answerlist";
     }
 
@@ -88,16 +87,14 @@ public class QuizzlerController {
         return "editquiz"; // editquiz.html
     }
 
-
-
     @GetMapping("/quiz/{id}/addquestion")
     public String showAddQuestionForm(@PathVariable("id") Long quizId, Model model) {
         Quiz quiz = quizRepository.findById(quizId).orElse(null);
-    
+
         if (quiz == null) {
             return "redirect:/quizlist";
         }
-    
+
         model.addAttribute("quizId", quizId);
         model.addAttribute("question", new Question());
         return "addquestion";
@@ -114,5 +111,12 @@ public class QuizzlerController {
         question.setQuiz(quiz);
         questionRepository.save(question);
         return "redirect:/quiz/" + quizId + "/questions";
-    }   
+    }
+
+    @RequestMapping(value = "/question/delete/{id}", method = RequestMethod.GET)
+    public String deleteQuestion(@PathVariable("id") Long questionId) {
+        Long quizId = questionRepository.findById(questionId).get().getQuiz().getQuizId();
+        questionRepository.deleteById(questionId);
+        return "redirect:/quiz/" + quizId + "/questions";
+    }
 }
