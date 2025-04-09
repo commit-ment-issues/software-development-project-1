@@ -9,6 +9,7 @@
         integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 
 </head>
+
 <body>
     <div class="container text-center">
         <h1>Questions of "<span th:text="${quiz.name}"></span>"</h1>
@@ -19,9 +20,17 @@
             </thead>
             <tbody>
                 <tr th:each="question : ${questions}">
-                    <td><a th:href="@{/question/{id}/answers(id=${question.questionId})}" th:text="${question.questionText}"></a></td>
+                    <td><a th:href="@{/question/{id}/answers(id=${question.questionId})}"
+                            th:text="${question.questionText}"></a></td>
                     <td th:text="${question.difficulty}"></td>
+                    <td>
+                        <a th:href="@{/question/delete/{id}(id=${question.questionId})}" class="btn btn-danger"
+                            onclick="return confirm('Are you sure you want to delete this question?');">
+                            Delete
+                        </a>
+                    </td>
                 </tr>
+
             </tbody>
         </table>
         <a th:href="@{/quiz/{id}/addquestion(id=${quiz.quizId})}" class="btn btn-success">Add question</a>
