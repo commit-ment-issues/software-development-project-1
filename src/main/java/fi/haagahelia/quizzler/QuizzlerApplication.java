@@ -9,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import fi.haagahelia.quizzler.domain.Answers;
+import fi.haagahelia.quizzler.domain.AnswersRepository;
 import fi.haagahelia.quizzler.domain.Question;
 import fi.haagahelia.quizzler.domain.QuestionRepository;
 import fi.haagahelia.quizzler.domain.Quiz;
@@ -23,7 +25,7 @@ public class QuizzlerApplication {
 	}
 
 	@Bean
-	public CommandLineRunner quizDemo(QuizRepository quizRepo, QuestionRepository questionRepo) {
+	public CommandLineRunner quizDemo(QuizRepository quizRepo, QuestionRepository questionRepo, AnswersRepository answersRepo) {
 		return args -> {
 			log.info("Adding some demo data");
 			Quiz quiz1 = new Quiz("first quiz", "test", "ABC123", 1, LocalDate.of(2025, 4, 7));
@@ -46,6 +48,15 @@ public class QuizzlerApplication {
 			questionRepo.save(question1);
 			questionRepo.save(question2);
 			questionRepo.save(question3);
+
+			Answers answer1 = new Answers("A Coding language", 1);
+			answer1.setQuestion(question1);
+			Answers answer2 = new Answers("Coffee", 0);
+			answer2.setQuestion(question1);
+
+			answersRepo.save(answer1);
+			answersRepo.save(answer2);
+			
 
 		};
 	}
