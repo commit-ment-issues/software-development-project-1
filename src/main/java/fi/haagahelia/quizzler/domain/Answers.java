@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 
 @Entity
 public class Answers {
@@ -18,7 +17,7 @@ public class Answers {
     private String text;
     private Integer status;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "questionId")
     private Question question;
 
