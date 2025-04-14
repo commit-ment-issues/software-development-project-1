@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Answer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container text-center">
+        <h1>Add an Answer</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <form th:object="${answers}" th:action="@{/question/{id}/saveanswer(id=${questionId})}" method="post">                    
+                    <div class="mb-3">
+                        <label for="answerText" class="form-label">Answer text</label>
+                        <input type="text" class="form-control" id="answerText" th:field="*{text}" required>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" th:field="*{status}" value="1" />
+                        <label class="form-check-label">Correct Answer</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add</button>
+                    <a th:href="@{/question/{id}/answers(id=${questionId})}" class="btn btn-danger">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

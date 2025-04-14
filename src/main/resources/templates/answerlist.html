@@ -21,7 +21,10 @@
             <tbody>
                 <tr th:each="answers : ${answers}">
                     <td th:text="${answers.text}"></td>
-                    <td th:text="${answers.status}"></td>
+                    <td>
+                        <span th:if="${answers.status == 1}">Correct</span>
+                        <span th:if="${answers.status != 1}">Incorrect</span>
+                    </td>
                     <td>
                         <a th:href="@{/answers/delete/{id}(id=${answers.Id})}" class="btn btn-danger"
                             onclick="return confirm('Are you sure you want to delete this answer?');">
@@ -31,7 +34,8 @@
                 </tr>
             </tbody>
         </table>
+        <a th:href="@{/question/{id}/addanswer(id=${question.questionId})}"><button type="button" class="btn btn-success">add an answer</button></a>
+        <a th:href="@{/quiz/{id}/questions(id=${question.questionId})}" class="btn btn-danger">Back to question list</a>
     </div>
 </body>
-
 </html>

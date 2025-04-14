@@ -125,4 +125,21 @@ public class QuizzlerController {
         answersRepository.deleteById(Id);
         return "redirect:/question/" + questionId + "/answers";
     }
+
+    @GetMapping("/question/{id}/addanswer")
+    public String showAddAnswerForm(@PathVariable("id") Long questionId, Model model){
+        model.addAttribute("questionId", questionId);
+        model.addAttribute("answers", new Answers());
+        return "addanswer";
+    }
+
+    @RequestMapping(value = "/question/{id}/saveanswer", method = RequestMethod.POST)
+    public String saveAnswer(@PathVariable("id") Long questionId, @ModelAttribute Answers answer){
+        Question question = questionRepository.findById(questionId).orElse(null);
+        
+        answer.setId(null);
+        answer.setQuestion(question);
+        answersRepository.save(answer);
+        return "redirect:/question/" + questionId + "/answers";
+    }
 }
