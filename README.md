@@ -12,3 +12,36 @@ Quizzer is a web application designed for teachers to create and manage quizzes 
 
 ## Backlog
 https://github.com/orgs/commit-ment-issues/projects/1
+
+
+## Developer guide
+
+This section provides instructions on how to get the backend application running locally via the command-line interface.
+
+### Requirement
+
+- Java 17 must be installed
+
+### Getting Started
+
+1. **Clone the repository**
+
+   git clone 
+   'https://github.com/commit-ment-issues/software-development-project-1.git'
+    'git@github.com:commit-ment-issues/software-development-project-1.git'
+
+   cd 'repository-directory'
+
+2. **Build the project**
+
+    ./mvnw clean install
+
+3. **Start application**
+
+    ./mvnw spring-boot:run
+
+4. **Once the application has started**
+
+    visit http://localhost:8080/quizlist
+
+
