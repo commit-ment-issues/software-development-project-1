@@ -1,6 +1,7 @@
 package fi.haagahelia.quizzler.web;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +21,6 @@ public class QuizRestController {
 
     @GetMapping("/quizzes")
     public List<Quiz> getAllQuizzes() {
-        return quizRepository.findAll();
+        return quizRepository.findAllByPublishedStatus(1);
     }
 }

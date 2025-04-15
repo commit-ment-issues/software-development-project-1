@@ -1,5 +1,7 @@
 package fi.haagahelia.quizzler.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +19,7 @@ public class Answers {
     private String text;
     private Integer status;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "questionId")
     private Question question;
@@ -61,7 +64,5 @@ public class Answers {
     public void setQuestion(Question question) {
         this.question = question;
     }
-
-    
 
 }

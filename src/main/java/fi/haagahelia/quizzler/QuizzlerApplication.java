@@ -25,12 +25,13 @@ public class QuizzlerApplication {
 	}
 
 	@Bean
-	public CommandLineRunner quizDemo(QuizRepository quizRepo, QuestionRepository questionRepo, AnswersRepository answersRepo) {
+	public CommandLineRunner quizDemo(QuizRepository quizRepo, QuestionRepository questionRepo,
+			AnswersRepository answersRepo) {
 		return args -> {
 			log.info("Adding some demo data");
 			Quiz quiz1 = new Quiz("first quiz", "test", "ABC123", 1, LocalDate.of(2025, 4, 7));
 			Quiz quiz2 = new Quiz("second quiz", "test", "ABC567", 1, LocalDate.of(2025, 4, 7));
-			Quiz quiz3 = new Quiz("third quiz", "test", "ABC890", 1, LocalDate.of(2025, 4, 7));
+			Quiz quiz3 = new Quiz("third quiz", "test", "ABC890", 0, LocalDate.of(2025, 4, 7));
 			Quiz quiz4 = new Quiz("fourth quiz", "test", "ABC123", 1, LocalDate.of(2025, 4, 7));
 
 			quizRepo.save(quiz1);
@@ -56,7 +57,6 @@ public class QuizzlerApplication {
 
 			answersRepo.save(answer1);
 			answersRepo.save(answer2);
-			
 
 		};
 	}
