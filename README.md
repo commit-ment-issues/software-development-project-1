@@ -25,10 +25,9 @@ This section provides instructions on how to get the backend application running
 ### Getting Started
 
 1. **Clone the repository**
-
-   git clone 
-   'https://github.com/commit-ment-issues/software-development-project-1.git'
-    'git@github.com:commit-ment-issues/software-development-project-1.git'
+   
+   git clone (https://github.com/commit-ment-issues/software-development-project-1.git)
+   git clone (git@github.com:commit-ment-issues/software-development-project-1.git)
 
    cd 'repository-directory'
 
