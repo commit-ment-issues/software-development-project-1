@@ -28,7 +28,7 @@ public class QuizzlerController {
     @Autowired
     AnswersRepository answersRepository;
 
-    @RequestMapping(value = { "/quizlist" })
+    @RequestMapping(value = { "/" })
     public String showQuizList(Model model) {
         model.addAttribute("quizzes", quizRepository.findAll());
         return "quizlist";
@@ -39,7 +39,7 @@ public class QuizzlerController {
         Quiz quiz = quizRepository.findById(quizId).orElse(null);
 
         if (quiz == null) {
-            return "redirect:/quizlist";
+            return "redirect:/";
         }
 
         model.addAttribute("quiz", quiz);
@@ -70,13 +70,13 @@ public class QuizzlerController {
             quiz.setPublishedStatus(0);
         }
         quizRepository.save(quiz);
-        return "redirect:/quizlist";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/quiz/delete/{id}", method = RequestMethod.GET)
     public String deleteQuiz(@PathVariable("id") Long quizId) {
         quizRepository.deleteById(quizId);
-        return "redirect:/quizlist";
+        return "redirect:/";
     }
 
     @GetMapping("/quiz/edit/{id}")
@@ -91,7 +91,7 @@ public class QuizzlerController {
         Quiz quiz = quizRepository.findById(quizId).orElse(null);
 
         if (quiz == null) {
-            return "redirect:/quizlist";
+            return "redirect:/";
         }
 
         model.addAttribute("quizId", quizId);
@@ -104,7 +104,7 @@ public class QuizzlerController {
         Quiz quiz = quizRepository.findById(quizId).orElse(null);
 
         if (quiz == null) {
-            return "redirect:/quizlist";
+            return "redirect:/q;
         }
 
         question.setQuiz(quiz);
@@ -127,16 +127,16 @@ public class QuizzlerController {
     }
 
     @GetMapping("/question/{id}/addanswer")
-    public String showAddAnswerForm(@PathVariable("id") Long questionId, Model model){
+    public String showAddAnswerForm(@PathVariable("id") Long questionId, Model model) {
         model.addAttribute("questionId", questionId);
         model.addAttribute("answers", new Answers());
         return "addanswer";
     }
 
     @RequestMapping(value = "/question/{id}/saveanswer", method = RequestMethod.POST)
-    public String saveAnswer(@PathVariable("id") Long questionId, @ModelAttribute Answers answer){
+    public String saveAnswer(@PathVariable("id") Long questionId, @ModelAttribute Answers answer) {
         Question question = questionRepository.findById(questionId).orElse(null);
-        
+
         answer.setId(null);
         answer.setQuestion(question);
         answersRepository.save(answer);

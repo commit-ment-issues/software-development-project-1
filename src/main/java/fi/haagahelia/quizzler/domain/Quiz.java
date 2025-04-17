@@ -3,6 +3,8 @@ package fi.haagahelia.quizzler.domain;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,9 +25,10 @@ public class Quiz {
     private Integer publishedStatus;
     private LocalDate creationDate;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz")
     private List<Question> questions;
-    
+
     public Quiz() {
     }
 
