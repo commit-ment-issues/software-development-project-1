@@ -104,7 +104,7 @@ public class QuizzlerController {
         Quiz quiz = quizRepository.findById(quizId).orElse(null);
 
         if (quiz == null) {
-            return "redirect:/q;
+            return "redirect:/";
         }
 
         question.setQuiz(quiz);
