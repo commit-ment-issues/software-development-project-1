@@ -29,7 +29,7 @@ public class QuizzlerApplication {
 			AnswersRepository answersRepo) {
 		return args -> {
 			if (quizRepo.count() == 0) {
-				quizRepo.save(new Quiz("first", "test", "ABC", 0, LocalDate.of(2025, 16, 4)));
+				quizRepo.save(new Quiz("first", "test", "ABC", 0, LocalDate.of(2025, 4, 18)));
 
 				log.info("Adding some demo data");
 				Quiz quiz1 = new Quiz("first quiz", "test", "ABC123", 1, LocalDate.of(2025, 4, 7));
