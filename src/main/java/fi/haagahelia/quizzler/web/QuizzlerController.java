@@ -94,6 +94,7 @@ public class QuizzlerController {
             return "redirect:/";
         }
 
+        model.addAttribute("quiz", quiz);
         model.addAttribute("quizId", quizId);
         model.addAttribute("question", new Question());
         return "addquestion";
@@ -128,6 +129,13 @@ public class QuizzlerController {
 
     @GetMapping("/question/{id}/addanswer")
     public String showAddAnswerForm(@PathVariable("id") Long questionId, Model model) {
+        Question question = questionRepository.findById(questionId).orElse(null);
+
+    if (question == null) {
+        return "redirect:/"; 
+    }
+
+    model.addAttribute("question", question);
         model.addAttribute("questionId", questionId);
         model.addAttribute("answers", new Answers());
         return "addanswer";
