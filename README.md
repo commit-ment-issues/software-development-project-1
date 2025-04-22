@@ -15,6 +15,8 @@ https://software-development-project-1-git-quizzer.2.rahtiapp.fi
 ## Backlog
 https://github.com/orgs/commit-ment-issues/projects/1
 
+## Retrospective 1
+https://edu.flinga.fi/s/ENTN72M
 
 ## Developer guide
 
