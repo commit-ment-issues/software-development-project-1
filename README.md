@@ -2,6 +2,8 @@
 
 Quizzer is a web application designed for teachers to create and manage quizzes and for students to take quizzes and receive feedback. The project follows Scrum methodology and is developed in three sprints.
 
+https://software-development-project-1-git-quizzer.2.rahtiapp.fi 
+
 ## Team Members
 
 - [Markus Mäntylä](https://github.com/MarkusMant)
