@@ -1,5 +1,6 @@
 package fi.haagahelia.quizzler.web;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import fi.haagahelia.quizzler.domain.Answers;
 import fi.haagahelia.quizzler.domain.AnswersRepository;
+import fi.haagahelia.quizzler.domain.Category;
 import fi.haagahelia.quizzler.domain.Question;
 import fi.haagahelia.quizzler.domain.QuestionRepository;
 import fi.haagahelia.quizzler.domain.Quiz;
 import fi.haagahelia.quizzler.domain.QuizRepository;
+import fi.haagahelia.quizzler.domain.CategoryRepository;
 
 @Controller
 public class QuizzlerController {
@@ -27,6 +30,13 @@ public class QuizzlerController {
 
     @Autowired
     AnswersRepository answersRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
+
+    QuizzlerController(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
     @RequestMapping(value = { "/" })
     public String showQuizList(Model model) {
@@ -131,11 +141,11 @@ public class QuizzlerController {
     public String showAddAnswerForm(@PathVariable("id") Long questionId, Model model) {
         Question question = questionRepository.findById(questionId).orElse(null);
 
-    if (question == null) {
-        return "redirect:/"; 
-    }
+        if (question == null) {
+            return "redirect:/"; 
+        }
 
-    model.addAttribute("question", question);
+        model.addAttribute("question", question);
         model.addAttribute("questionId", questionId);
         model.addAttribute("answers", new Answers());
         return "addanswer";
@@ -150,4 +160,23 @@ public class QuizzlerController {
         answersRepository.save(answer);
         return "redirect:/question/" + questionId + "/answers";
     }
+
+    @GetMapping("/categorylist")
+    public String showCategoryList(Model model) {
+        model.addAttribute("categories", categoryRepository.findAll());
+        return "categorylist";
+    }
+
+    @GetMapping("/addcategory")
+    public String showAddCategoryForm(Model model) {
+        model.addAttribute("category", new Category());
+        return "addcategory";
+    }
+
+    @RequestMapping(value = "/category/save", method = RequestMethod.POST)
+    public String saveCategory(@ModelAttribute Category category) {
+        categoryRepository.save(category);
+        return "redirect:/categorylist";
+    }
+
 }
