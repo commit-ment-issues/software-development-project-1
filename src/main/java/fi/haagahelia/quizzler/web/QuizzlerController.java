@@ -70,6 +70,7 @@ public class QuizzlerController {
     @GetMapping("/addquiz")
     public String showAddQuizForm(Model model) {
         model.addAttribute("quiz", new Quiz());
+        model.addAttribute("categories", categoryRepository.findAll());
         return "addquiz";
     }
 
@@ -92,6 +93,7 @@ public class QuizzlerController {
     @GetMapping("/quiz/edit/{id}")
     public String editQuizForm(@PathVariable("id") Long quizId, Model model) {
         model.addAttribute("quiz", quizRepository.findById(quizId));
+        model.addAttribute("categories", categoryRepository.findAll());
 
         return "editquiz"; // editquiz.html
     }
