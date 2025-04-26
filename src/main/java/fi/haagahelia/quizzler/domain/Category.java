@@ -23,10 +23,9 @@ public class Category {
     public Category() {
     }
 
-    public Category(String name, String description, List<Quiz> quizzes) {
+    public Category(String name, String description) {
         this.name = name;
         this.description = description;
-        this.quizzes = quizzes;
     }
 
     public Long getCategoryid() {
