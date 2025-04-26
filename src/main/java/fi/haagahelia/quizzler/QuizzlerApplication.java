@@ -15,6 +15,8 @@ import fi.haagahelia.quizzler.domain.Question;
 import fi.haagahelia.quizzler.domain.QuestionRepository;
 import fi.haagahelia.quizzler.domain.Quiz;
 import fi.haagahelia.quizzler.domain.QuizRepository;
+import fi.haagahelia.quizzler.domain.Category;
+import fi.haagahelia.quizzler.domain.CategoryRepository;
 
 @SpringBootApplication
 public class QuizzlerApplication {
@@ -26,16 +28,25 @@ public class QuizzlerApplication {
 
 	@Bean
 	public CommandLineRunner quizDemo(QuizRepository quizRepo, QuestionRepository questionRepo,
-			AnswersRepository answersRepo) {
+			AnswersRepository answersRepo, CategoryRepository categoryRepo) {
 		return args -> {
 			if (quizRepo.count() == 0) {
-				quizRepo.save(new Quiz("first", "test", "ABC", 0, LocalDate.of(2025, 4, 18)));
+
+				Category category1 = new Category("Agile", "Quizzes related to the agile principles and project management frameworks");
+				Category category2 = new Category("Databases", "Quizzes related to different database management systems and query languages");
+
+				categoryRepo.save(category1);
+				categoryRepo.save(category2);
+
+
+				quizRepo.save(new Quiz("first", "test", "ABC", 0, LocalDate.of(2025, 4, 18), category1));
 
 				log.info("Adding some demo data");
-				Quiz quiz1 = new Quiz("first quiz", "test", "ABC123", 1, LocalDate.of(2025, 4, 7));
-				Quiz quiz2 = new Quiz("second quiz", "test", "ABC567", 1, LocalDate.of(2025, 4, 7));
-				Quiz quiz3 = new Quiz("third quiz", "test", "ABC890", 0, LocalDate.of(2025, 4, 7));
-				Quiz quiz4 = new Quiz("fourth quiz", "test", "ABC123", 1, LocalDate.of(2025, 4, 7));
+
+				Quiz quiz1 = new Quiz("first quiz", "test", "ABC123", 1, LocalDate.of(2025, 4, 7), category1);
+				Quiz quiz2 = new Quiz("second quiz", "test", "ABC567", 1, LocalDate.of(2025, 4, 7), category2);
+				Quiz quiz3 = new Quiz("third quiz", "test", "ABC890", 0, LocalDate.of(2025, 4, 7),category1);
+				Quiz quiz4 = new Quiz("fourth quiz", "test", "ABC123", 1, LocalDate.of(2025, 4, 7), category1);
 
 				quizRepo.save(quiz1);
 				quizRepo.save(quiz2);
