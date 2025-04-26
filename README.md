@@ -45,6 +45,6 @@ This section provides instructions on how to get the backend application running
 
 4. **Once the application has started**
 
-    visit http://localhost:8080/quizlist
+    visit http://localhost:8080/
 
 
