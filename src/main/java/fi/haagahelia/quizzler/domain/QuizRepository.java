@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
     public List<Quiz> findAllByPublishedStatus(Integer status);
+    public List<Quiz> findByCategory(Category category);
 }
