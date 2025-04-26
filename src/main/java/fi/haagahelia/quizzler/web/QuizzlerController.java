@@ -179,4 +179,10 @@ public class QuizzlerController {
         return "redirect:/categorylist";
     }
 
+    @RequestMapping(value = "/category/delete/{id}", method = RequestMethod.GET)
+    public String deleteCategory(@PathVariable("id") Long categoryId) {
+        categoryRepository.deleteById(categoryId);
+        return "redirect:/categorylist";
+    }
+
 }
