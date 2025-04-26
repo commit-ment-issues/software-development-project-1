@@ -40,12 +40,13 @@ public class Quiz {
     public Quiz() {
     }
 
-    public Quiz(String name, String description, String courseCode, Integer publishedStatus, LocalDate creationDate) {
+    public Quiz(String name, String description, String courseCode, Integer publishedStatus, LocalDate creationDate, Category category) {
         this.name = name;
         this.description = description;
         this.courseCode = courseCode;
         this.publishedStatus = publishedStatus;
         this.creationDate = creationDate;
+        this.category = category;
     }
 
     public Long getQuizId() {
@@ -102,6 +103,14 @@ public class Quiz {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
 }
