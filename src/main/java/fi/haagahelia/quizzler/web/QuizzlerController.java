@@ -18,6 +18,7 @@ import fi.haagahelia.quizzler.domain.QuestionRepository;
 import fi.haagahelia.quizzler.domain.Quiz;
 import fi.haagahelia.quizzler.domain.QuizRepository;
 import fi.haagahelia.quizzler.domain.CategoryRepository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class QuizzlerController {
@@ -144,7 +145,7 @@ public class QuizzlerController {
         Question question = questionRepository.findById(questionId).orElse(null);
 
         if (question == null) {
-            return "redirect:/"; 
+            return "redirect:/";
         }
 
         model.addAttribute("question", question);
@@ -185,6 +186,18 @@ public class QuizzlerController {
     public String deleteCategory(@PathVariable("id") Long categoryId) {
         categoryRepository.deleteById(categoryId);
         return "redirect:/categorylist";
+    }
+
+    @GetMapping("/quizzesbycategory")
+    public String showQuizzesByCategory(@RequestParam String category, Model model) {
+        Category cat = categoryRepository.findByName(category);
+        if (cat != null) {
+            List<Quiz> quizzes = quizRepository.findByCategory(cat);
+            model.addAttribute("quizzes", quizzes);
+        } else {
+            model.addAttribute("quizzes", List.of());
+        }
+        return "quizlist";
     }
 
 }
