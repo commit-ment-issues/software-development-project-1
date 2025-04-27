@@ -200,4 +200,20 @@ public class QuizzlerController {
         return "quizlist";
     }
 
+    @GetMapping("/quiz/results/{id}")
+    public String showQuizResults(@PathVariable("id") Long quizId, Model model) {
+
+        Quiz quiz = quizRepository.findById(quizId).orElse(null);
+
+        if (quiz == null) {
+            return "redirect:/";
+        }
+
+        model.addAttribute("quiz", quiz);
+        model.addAttribute("questions", quiz.getQuestions());
+
+        return "results"; //results.html
+    }
+    
+
 }
