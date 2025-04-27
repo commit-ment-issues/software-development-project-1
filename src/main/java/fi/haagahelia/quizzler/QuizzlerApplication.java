@@ -38,9 +38,6 @@ public class QuizzlerApplication {
 				categoryRepo.save(category1);
 				categoryRepo.save(category2);
 
-
-				quizRepo.save(new Quiz("first", "test", "ABC", 0, LocalDate.of(2025, 4, 18), category1));
-
 				log.info("Adding some demo data");
 
 				Quiz quiz1 = new Quiz("first quiz", "test", "ABC123", 1, LocalDate.of(2025, 4, 7), category1);
@@ -64,16 +61,29 @@ public class QuizzlerApplication {
 				questionRepo.save(question2);
 				questionRepo.save(question3);
 
-				Answers answer1 = new Answers("A Coding language", 1);
+				Answers answer1 = new Answers("A coding language.", 1);
 				answer1.setQuestion(question1);
-				Answers answer2 = new Answers("Coffee", 0);
+				Answers answer2 = new Answers("A delicious kind of coffee.", 0);
 				answer2.setQuestion(question1);
+
+				Answers answer3 = new Answers("Spring Boot is a framework that simplifies the development of Spring applications by providing auto-configuration, embedded servers, and minimal setup.", 1);
+				answer3.setQuestion(question2);
+				Answers answer4 = new Answers("Spring Boot is a JavaScript library used for creating dynamic websites in the browser.", 0);
+				answer4.setQuestion(question2);
+
+				Answers answer5 = new Answers("Dependency injection is a method of encrypting sensitive data before it's sent over the network.", 0);
+				answer5.setQuestion(question3);
+				Answers answer6 = new Answers("Dependency injection is a design pattern where objects receive their dependencies from an external source rather than creating them themselves, promoting loose coupling and easier testing.", 1);
+				answer6.setQuestion(question3);
 
 				answersRepo.save(answer1);
 				answersRepo.save(answer2);
-			}
+				answersRepo.save(answer3);
+				answersRepo.save(answer4);
+				answersRepo.save(answer5);
+				answersRepo.save(answer6);
 
+			}
 		};
 	}
-
 }
