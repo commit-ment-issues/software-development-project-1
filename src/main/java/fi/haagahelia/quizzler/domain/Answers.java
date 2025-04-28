@@ -1,5 +1,6 @@
 package fi.haagahelia.quizzler.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -19,7 +20,7 @@ public class Answers {
     private String text;
     private Integer status;
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "questionId")
     private Question question;
