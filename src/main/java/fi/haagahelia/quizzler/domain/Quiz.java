@@ -33,7 +33,7 @@ public class Quiz {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "categoryId")
+    @JoinColumn(name = "categoryid")
     private Category category;
 
 

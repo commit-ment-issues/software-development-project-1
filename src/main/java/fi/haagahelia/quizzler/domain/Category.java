@@ -13,7 +13,7 @@ import jakarta.persistence.OneToMany;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Categoryid;
+    private Long categoryid;
     private String name;
     private String description;
 
@@ -26,14 +26,6 @@ public class Category {
     public Category(String name, String description) {
         this.name = name;
         this.description = description;
-    }
-
-    public Long getCategoryid() {
-        return Categoryid;
-    }
-
-    public void setCategoryid(Long categoryid) {
-        Categoryid = categoryid;
     }
 
     public String getName() {
@@ -58,6 +50,14 @@ public class Category {
 
     public void setQuizzes(List<Quiz> quizzes) {
         this.quizzes = quizzes;
+    }
+
+    public Long getCategoryid() {
+        return categoryid;
+    }
+
+    public void setCategoryid(Long categoryid) {
+        this.categoryid = categoryid;
     }
 
     
