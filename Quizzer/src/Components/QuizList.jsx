@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { AgGridReact } from 'ag-grid-react';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
+import { Link } from "react-router-dom";
 
-import { getQuizzes } from "../utils/quizapi";
+import { getPublishedQuizzes } from "../utils/quizapi";
 
 ModuleRegistry.registerModules([AllCommunityModule])
 
@@ -10,9 +11,15 @@ function QuizList(){
 
     const [quizzes, setQuizzes] = useState([]);
     const [colDefs, setColDefs] = useState([
-        { field: "name", headerName: "Title",},
+        { field: "name", headerName: "Title", cellRenderer: (params) => (
+            <Link to={``} style={{ color: "#57B9FF" }}>
+              {params.value}
+            </Link>
+          )},
         { field: "description", headerName: "Description" },
-        { field: "courseCode", headerName: "Course Code" },
+        { field: "courseCode", headerName: "Course" },
+        { field: "category", headerName: "Category" },
+        { field: "creationDate", headerName: "Added on"}
     ]);
 
 
@@ -21,12 +28,12 @@ function QuizList(){
     }, []);
 
     const handleFetch = () => {
-        getQuizzes().then(data => setQuizzes(data))
+        getPublishedQuizzes().then(data => setQuizzes(data))
         .catch(err => console.log(err))
     }
 
     return ( 
-        <div className="ag-theme-material" style={{ width: 600, height: 400 }}>
+        <div className="ag-theme-material" style={{ width: "100%", height: 400 }}>
             <AgGridReact
                 rowData={quizzes}
                 columnDefs={colDefs}
