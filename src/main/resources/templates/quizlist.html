@@ -31,8 +31,8 @@
                     <td th:text="${quiz.courseCode}"></td>
                     <td th:text="${quiz.category.name}" ></td>
                     <td>
-                        <span th:if="${quiz.publishedStatus == 1}">Published</span>
-                        <span th:if="${quiz.publishedStatus != 1}">Not published</span>
+                        <span th:if="${quiz.publishedStatus == 1}" class="btn btn-primary btn-sm" >Published</span>
+                        <span th:if="${quiz.publishedStatus != 1}" class="btn btn-secondary btn-sm" >Not published</span>
                     </td>
                     <td th:text="${quiz.creationDate}"></td>
                     <td>
