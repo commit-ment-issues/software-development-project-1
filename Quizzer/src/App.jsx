@@ -24,7 +24,7 @@ function App() {
                 }}
               >QUIZZES</Link>
 
-              <Link to={""}
+              <Link to={"categories"}
                 style={{
                   textDecoration: "none",
                   color: "white",
@@ -32,11 +32,11 @@ function App() {
                 }}
               >CATEGORIES</Link>
             </nav>
-            <Outlet></Outlet>
           </Toolbar>
         </AppBar>
 
       </Stack>
+      <Outlet />
 
       <Box
         mt={3}
