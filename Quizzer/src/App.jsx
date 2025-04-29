@@ -21,19 +21,28 @@ function App() {
   return (
     <HashRouter>
       <Container maxwidth="xl">
-        <Box sx={{ bgcolor: 'gray', color: 'primary.contrastText', p: 2}}>
-          <Typography variant="h4" color='black' paddingTop={1} align='center'>Quizzes</Typography>
+        <Box sx={{ color: 'primary.contrastText', p: 2 }}>
+          <Typography variant="h4" color='black' paddingTop={1} align='center'>Quizzer</Typography>
+
           <Tabs value={value} onChange={handleChange} aria-label='navigation tabs' centered>
-            <Tab label="Quiz List" color='black' component={Link} to='/' />
-            <Tab label="Question List" color='black' component={Link} to='/questionlist' />
-            <Tab label="Categories" color='black' component={Link} to='/categories' />
+            <Tab 
+            label="Quiz List" 
+            component={Link} to='/' />
+            <Tab 
+            label="Question List" 
+            component={Link} to='/questionlist' />
+            <Tab 
+            label="Categories" 
+            component={Link} to='/categories' />
           </Tabs>
         </Box>
+
         <Routes>
           <Route path='/' element={<QuizList />} />
           <Route path='/questionlist' element={<QuestionList />} />
-          <Route path='/categorylist' element={<CategoryList />} />
+          <Route path='/categories' element={<CategoryList />} />
         </Routes>
+
         <CssBaseline />
       </Container>
     </HashRouter>
