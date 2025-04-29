@@ -1,7 +1,6 @@
 package fi.haagahelia.quizzler.web;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +13,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import fi.haagahelia.quizzler.domain.QuizRepository;
 import fi.haagahelia.quizzler.domain.Quiz;
+import fi.haagahelia.quizzler.domain.CategoryRepository;
+import fi.haagahelia.quizzler.domain.Category;
 
 @RestController
 @RequestMapping("/api")
@@ -22,10 +23,14 @@ public class QuizRestController {
     @Autowired
     private QuizRepository quizRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @GetMapping("/quizzes/{id}")
     public Quiz getQuizById(@PathVariable Long id) {
         return quizRepository.findById(id).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz with the provided id " + id + " does not exist"));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Quiz with the provided id " + id + " does not exist"));
     }
 
     @GetMapping("/quizzes")
@@ -37,4 +42,21 @@ public class QuizRestController {
     public List<Quiz> getPublishedQuizzes() {
         return quizRepository.findAllByPublishedStatus(1);
     }
+
+    @GetMapping("/quizzes/categories/{id}")
+    public List<Quiz> getQuizzesByCategoryId(@PathVariable Long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Category with ID " + id + " not found"));
+
+        List<Quiz> quizzes = quizRepository.findByCategory(category);
+
+        if (quizzes.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "No quizzes found for category ID " + id);
+        }
+
+        return quizzes;
+    }
+
 }
