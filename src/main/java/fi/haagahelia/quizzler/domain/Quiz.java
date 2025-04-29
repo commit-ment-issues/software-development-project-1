@@ -27,11 +27,9 @@ public class Quiz {
     private Integer publishedStatus;
     private LocalDate creationDate;
 
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz")
     private List<Question> questions;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "categoryid")
     private Category category;

@@ -12,13 +12,13 @@ function QuizList(){
     const [quizzes, setQuizzes] = useState([]);
     const [colDefs, setColDefs] = useState([
         { field: "name", headerName: "Title", cellRenderer: (params) => (
-            <Link to={``} style={{ color: "#57B9FF" }}>
+            <Link to={`quiz/${params.data.id}`} style={{ color: "#57B9FF" }}>
               {params.value}
             </Link>
           )},
         { field: "description", headerName: "Description" },
         { field: "courseCode", headerName: "Course" },
-        { field: "category", headerName: "Category" },
+        { field: "category", headerName: "Category", cellRenderer: (params) => params.value?.name },
         { field: "creationDate", headerName: "Added on"}
     ]);
 
