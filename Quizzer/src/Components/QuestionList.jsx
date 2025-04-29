@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Box, Typography, Divider } from "@mui/material";
-import { getQuizById, getQuestionsByQuizId } from "../api"; // Muista importata getQuizById ja getQuestionsByQuizId
+import { getQuizById, getQuestionsByQuizId } from "../utils/quizapi"; // Muista importata getQuizById ja getQuestionsByQuizId
 import { Link } from "react-router-dom"; // Lisää Link import
 
 export default function QuestionList() {
