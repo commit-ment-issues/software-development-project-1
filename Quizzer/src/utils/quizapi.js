@@ -1,5 +1,5 @@
 export function getQuizzes() {
-  return fetch(import.meta.env.API_URL, {
+  return fetch('http://localhost:8080/api/quizzes/', {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -14,7 +14,7 @@ export function getQuizzes() {
 }
 
 export function getPublishedQuizzes() {
-  return fetch(import.meta.env.VITE_API_URL, {
+  return fetch('http://localhost:8080/api/quizzes/published', {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -45,6 +45,21 @@ export function getQuizById(id) {
 
 export function getQuestionsByQuizId(id) {
   return fetch(`http://localhost:8080/api/quiz/${id}/questions`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
+  })
+    .then(response => {
+      if (!response.ok)
+        throw new Error("Error in fetch: " + response.statusText);
+      return response.json();
+    });
+}
+
+export function getAnswersByQuestionId(id) {
+  return fetch(`http://localhost:8080/api/question/${id}/answers`, {
     method: "GET",
     headers: {
       Accept: "application/json",
