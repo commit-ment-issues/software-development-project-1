@@ -27,11 +27,8 @@ function App() {
 
           <Tabs value={value} onChange={handleChange} aria-label='navigation tabs' centered>
             <Tab 
-            label="Quiz List" 
+            label="Quizzes" 
             component={Link} to='/' />
-            <Tab 
-            label="Question List" 
-            component={Link} to='/questionlist' />
             <Tab 
             label="Categories" 
             component={Link} to='/categories' />
@@ -40,7 +37,7 @@ function App() {
 
         <Routes>
           <Route path='/' element={<QuizList />} />
-          <Route path='/questionlist' element={<QuestionList />} />
+          <Route path='/quiz/:quizId/questions' element={<QuestionList />} />
           <Route path='/categories' element={<CategoryList />} />
           <Route path='/categories/:categoryid' element={<CategoryPage />} />
         </Routes>

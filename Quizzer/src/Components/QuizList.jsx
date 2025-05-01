@@ -11,10 +11,11 @@ function QuizList(){
 
     const [quizzes, setQuizzes] = useState([]);
     const [colDefs, setColDefs] = useState([
-        { field: "name", headerName: "Title", cellRenderer: (params) => (
-            <Link to={`quiz/${params.data.id}`} style={{ color: "#57B9FF" }}>
-              {params.value}
-            </Link>
+        { field: "name", headerName: "Title", 
+            cellRenderer: (params) => (
+                <Link to={`quiz/${params.data.quizId}/questions`} style={{ color: "#57B9FF" }}>
+                    {params.value}
+                </Link>
           )},
         { field: "description", headerName: "Description" },
         { field: "courseCode", headerName: "Course" },
@@ -28,12 +29,14 @@ function QuizList(){
     }, []);
 
     const handleFetch = () => {
-        getPublishedQuizzes().then(data => setQuizzes(data))
-        .catch(err => console.log(err))
+        getPublishedQuizzes()
+            .then(data => setQuizzes(data))
+            .catch(err => console.log(err))
     }
 
     return ( 
         <div className="ag-theme-material" style={{ width: "100%", height: 400 }}>
+            <h1>Quizzes</h1>
             <AgGridReact
                 rowData={quizzes}
                 columnDefs={colDefs}
