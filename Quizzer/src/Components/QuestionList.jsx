@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getQuizById, getQuestionsByQuizId, getAnswersByQuestionId } from "../utils/quizapi";
+import { getQuizById, getQuestionsByQuizId } from "../utils/quizapi";
 import { Typography } from "@mui/material";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -15,7 +15,6 @@ function QuestionList() {
   const quizId = useParams().quizId;
   const [quiz, setQuiz] = useState([]);
   const [questions, setQuestions] = useState([]);
-  const [answersMap, setAnswersMap] = useState({})
   const [error, setError] = useState(null);
 
 
@@ -32,20 +31,7 @@ function QuestionList() {
       })
       .then(questions => {
         setQuestions(questions);
-        const fetchAnswers = questions.map((q) =>
-          getAnswersByQuestionId(q.questionId).then((answers) => ({
-            questionId: q.questionId,
-            answers,
-          }))
-        );
-        return Promise.all(fetchAnswers);
-      })
-      .then((answersData) => {
-        const answersMap = {};
-        answersData.forEach(({ questionId, answers }) => {
-          answersMap[questionId] = answers;
-        });
-        setAnswersMap(answersMap);
+        console.log(questions);
       })
       .catch((err) => setError(err.message));
   }, [quizId]);
@@ -72,17 +58,13 @@ function QuestionList() {
                 Question {index + 1} of {questions.length} - Difficulty: {q.difficulty}
               </Typography>
               <FormGroup>
-                {answersMap[q.questionId] && answersMap[q.questionId].length > 0 ? (
-                  answersMap[q.questionId].map((answer) => (
-                    <FormControlLabel
-                      key={answer.answerId}
-                      control={<Checkbox />}
-                      label={answer.text}
-                    />
-                  ))
-                ) : (
-                  <li>No answers found.</li>
-                )}
+              {q.answers.map((answer) => (
+                  <FormControlLabel
+                    key={answer.answerId}
+                    control={<Checkbox />}
+                    label={answer.text}
+                  />
+                ))}
               </FormGroup>
               <Button variant="contained" color="primary">
                 Submit Answer
