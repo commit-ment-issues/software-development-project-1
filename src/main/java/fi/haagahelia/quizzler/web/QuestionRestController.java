@@ -23,11 +23,19 @@ public class QuestionRestController {
     @GetMapping("/quiz/{id}/questions")
     public List<Question> getQuestionsByQuizId(@PathVariable Long id) {
         List<Question> questions = questionRepository.findByQuiz_QuizId(id);
-        
+
         if (questions.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz with the provided id " + id + " does not exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Quiz with the provided id " + id + " does not exist");
+        }
+
+        return questions;
     }
-    
+
+    @GetMapping("/quiz/questions")
+    public List<Question> getAllQuestions() {
+        List<Question> questions = questionRepository.findAll();
+
         return questions;
     }
 }
