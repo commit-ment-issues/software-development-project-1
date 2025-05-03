@@ -14,7 +14,7 @@ import java.util.List;
 
 import fi.haagahelia.quizzler.domain.Answers;
 import fi.haagahelia.quizzler.domain.AnswersRepository;
-import fi.haagahelia.quizzler.domain.CreateAnswerDTO;
+import fi.haagahelia.quizzler.domain.CreateSubmittedAnswerDTO;
 import fi.haagahelia.quizzler.domain.Question;
 
 @RestController
@@ -35,10 +35,10 @@ public class AnswerRestController {
         return answers;
     }
 
-    @PostMapping("/answers")
-    public void CreateAnswer(@RequestBody CreateAnswerDTO dto) {
+    @PostMapping("/submittedanswer")
+    public void CreateSubmittedAnswer(@RequestBody CreateSubmittedAnswerDTO dto) {
         Long optionId = dto.getAnswerOptionId();
-        
+
         if (dto.getAnswerOptionId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Answer option ID is not provided.");
         }
@@ -52,7 +52,7 @@ public class AnswerRestController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Quiz is not published.");
         }
 
-        answerRepository.save(selectedAnswerOption); 
+        //answerRepository.save(selectedAnswerOption); 
     }
 
 }
