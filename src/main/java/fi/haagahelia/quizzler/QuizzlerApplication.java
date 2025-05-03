@@ -60,11 +60,11 @@ public class QuizzlerApplication {
 				question3.setQuiz(quiz1);
 
 				Question question4 = new Question("What is Java?", "easy", 0, 0, 0);
-				question1.setQuiz(quiz2);
+				question4.setQuiz(quiz2);
 				Question question5 = new Question("What is Spring Boot?", "medium", 0, 0, 0);
-				question2.setQuiz(quiz2);
+				question5.setQuiz(quiz2);
 				Question question6 = new Question("Explain Dependency Injection", "hard", 0, 0, 0);
-				question3.setQuiz(quiz2);
+				question6.setQuiz(quiz2);
 
 				questionRepo.save(question1);
 				questionRepo.save(question2);
