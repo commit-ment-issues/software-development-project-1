@@ -16,6 +16,7 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Question {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long questionId;
@@ -108,5 +109,14 @@ public class Question {
 
     public void setWrongAnswers(Integer wrongAnswers) {
         this.wrongAnswers = wrongAnswers;
+    }
+
+    public void UpdateSubmittedAnswer(boolean isCorrect) {
+        this.totalAnswers++;
+        if (isCorrect) {
+            this.correctAnswers++;
+        } else {
+            this.wrongAnswers++;
+        }
     }
 }
