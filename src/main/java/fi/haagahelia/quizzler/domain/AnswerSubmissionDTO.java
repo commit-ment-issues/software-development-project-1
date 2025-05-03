@@ -1,23 +1,13 @@
 package fi.haagahelia.quizzler.domain;
 
-public class CreateSubmittedAnswerDTO {
+public class AnswerSubmissionDTO {
 
     private Long answerOptionId;
-
-    public CreateSubmittedAnswerDTO() {
-    }
-
-    public CreateSubmittedAnswerDTO(Long answerOptionId) {
-        this.answerOptionId = answerOptionId;
-    }
 
     public Long getAnswerOptionId() {
         return answerOptionId;
     }
-
     public void setAnswerOptionId(Long answerOptionId) {
         this.answerOptionId = answerOptionId;
     }
-
-    
 }
