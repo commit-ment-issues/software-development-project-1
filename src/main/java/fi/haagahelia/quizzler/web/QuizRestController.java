@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import fi.haagahelia.quizzler.domain.QuizRepository;
 import fi.haagahelia.quizzler.domain.Quiz;
 import fi.haagahelia.quizzler.domain.CategoryRepository;
+import fi.haagahelia.quizzler.domain.QuestionResultsDTO;
 import fi.haagahelia.quizzler.domain.Category;
 
 @RestController
@@ -57,6 +58,24 @@ public class QuizRestController {
         }
 
         return quizzes;
+    }
+
+    @GetMapping("/quizzes/{id}/results")
+    public List<QuestionResultsDTO> getQuizResults(@PathVariable Long id) {
+        Quiz quiz = quizRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Quiz with the provided id " + id + " does not exist"));
+    
+        return quiz.getQuestions().stream().map(question -> 
+            new QuestionResultsDTO(
+                question.getQuestionId(),
+                question.getQuestionText(),
+                question.getDifficulty(),
+                question.getTotalAnswers(),  
+                question.getCorrectAnswers(),
+                question.getWrongAnswers() 
+            )
+        ).toList();
     }
 
 }
