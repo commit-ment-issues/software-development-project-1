@@ -111,12 +111,5 @@ public class Question {
         this.wrongAnswers = wrongAnswers;
     }
 
-    public void UpdateSubmittedAnswer(boolean isCorrect) {
-        this.totalAnswers++;
-        if (isCorrect) {
-            this.correctAnswers++;
-        } else {
-            this.wrongAnswers++;
-        }
-    }
+
 }
