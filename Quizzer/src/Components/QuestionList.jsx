@@ -1,14 +1,20 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getQuizById, getQuestionsByQuizId } from "../utils/quizapi";
-import { Typography } from "@mui/material";
+import { CardActionArea, RadioGroup, Typography } from "@mui/material";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Item from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
+import FormControl from "@mui/material/FormControl";
 import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from "@mui/material/FormLabel";
 import Button from '@mui/material/Button';
+import Radio from "@mui/material/Radio";
+import Card from "@mui/material/Card";
+import CardContent from '@mui/material/CardContent';
+
 
 
 function QuestionList() {
@@ -16,8 +22,30 @@ function QuestionList() {
   const [quiz, setQuiz] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedAnswers, setSelectedAnswers] = useState({
+    questionId: null,
+    answerId: null,
+    answerStatus: null
+  });
 
+  const handleChange = (e, questionId) => {
+    const answerId = parseInt(e.target.value);
+    const answer = questions
+      .find(q => q.questionId === questionId)
+      ?.answers.find(a => a.id === answerId);
 
+    if (answer) {
+      setSelectedAnswers({
+        questionId: questionId,
+        answerId: answerId,
+        answerStatus: answer.status
+      });
+    }
+  };
+  const handleSubmit = () => {
+    console.log("selected answer", JSON.stringify(selectedAnswers, null, 2)) //Debugging
+    //TODO
+  };
   
   useEffect(() => {
     if (!quizId) {
@@ -46,33 +74,50 @@ function QuestionList() {
       <h2>{quiz.description}</h2>
       <h4>Questions:</h4>
       <Box sx={{ width: "100%", height: 400 }}>
-        {questions.length > 0 ? (
-          questions.map((q,index) => (
-            <Item sx={{ my: 1, mx: 'auto', p:1 }}key={q.id || q.questionId}>
-              <Stack spacing={1} direction="row" sx={{ alignItems: "center" }} >
-                <Typography variant="h6" color="black">
-                  {index + 1}. {q.questionText || q.text}
-                </Typography>
-              </Stack>                
-              <Typography variant="subtitle1" color="black">
-                Question {index + 1} of {questions.length} - Difficulty: {q.difficulty}
-              </Typography>
-              <FormGroup>
-              {q.answers.map((answer) => (
-                  <FormControlLabel
-                    key={answer.answerId}
-                    control={<Checkbox />}
-                    label={answer.text}
-                  />
-                ))}
-              </FormGroup>
-              <Button variant="contained" color="primary">
-                Submit Answer
-              </Button>
-            </Item>
-          ))
-          ): (
-            <li>No questions found.</li>
+        {questions.length > 0 ? (questions.map((q, index) => (
+            <Card sx={{ maxWidth: 800, mb: 2 }} key={q.id || q.questionId}>
+              <CardActionArea>
+                <CardContent>
+                  <Typography variant="h5">
+                    {index + 1}. {q.questionText || q.text}
+                  </Typography>
+                  <Typography variant="subtitle1">
+                  Question {index + 1} of {questions.length} - difficulty: {q.difficulty}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+              <CardContent>
+                <FormControl>
+                  <RadioGroup
+                    aria-labelledby={`radio-buttons-${q.questionId}`}
+                    name={`question-${q.questionId}`}
+                    value={(selectedAnswers.questionId === q.questionId && selectedAnswers.answerId) 
+                      ? selectedAnswers.answerId.toString() 
+                      : ''}
+                    onChange={(e) => handleChange(e, q.questionId)}
+                  >
+                    {q.answers.map((answer) => (
+                      <FormControlLabel 
+                        key={answer.id}
+                        value={answer.id}
+                        control={<Radio />} 
+                        label={answer.text} 
+                      />
+                    ))}
+                  </RadioGroup>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleSubmit(q.questionId)}
+                    sx={{ width: 200, mt: 2 }}
+                  >
+                    Submit answer
+                  </Button>
+                </FormControl>
+              </CardContent>
+            </Card>
+          ))) : (
+            <Typography variant="body1">No questions found.</Typography>
           )}
       </Box>
     </div>
