@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { AgGridReact } from 'ag-grid-react';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
-import Typography from '@mui/material/Typography';
-import { Link } from "react-router-dom";  //odottaa linkkiä categorian nimiin
+import { Link } from "react-router-dom";
 
 import { getCategories } from "../utils/categoryapi";
 
@@ -32,7 +31,7 @@ function CategoryList() {
 
     return (
         <div className="ag-theme-material" style={{ width: "100%", height: 400 }}>
-            <Typography variant="h4">Categories</Typography>
+            <h1>Categories</h1>
             <AgGridReact
                 rowData={categories}
                 columnDefs={colDefs}
