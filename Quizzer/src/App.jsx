@@ -12,6 +12,7 @@ import QuizList from './Components/QuizList';
 import QuestionList from './Components/QuestionList';
 import CategoryList from './Components/CategoryList';
 import CategoryPage from './Components/CategoryPage';
+import ResultsPage from './Components/ResultsPage';
 
 function App() {
   const [value, setValue] = React.useState(0);
@@ -38,6 +39,7 @@ function App() {
         <Routes>
           <Route path='/' element={<QuizList />} />
           <Route path='/quiz/:quizId/questions' element={<QuestionList />} />
+          <Route path='/quiz/:quizId/results' element= {<ResultsPage />} />
           <Route path='/categories' element={<CategoryList />} />
           <Route path='/categories/:categoryid' element={<CategoryPage />} />
         </Routes>
