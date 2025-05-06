@@ -18,6 +18,9 @@ https://github.com/orgs/commit-ment-issues/projects/1
 ## Retrospective 1
 https://edu.flinga.fi/s/ENTN72M
 
+## Retrospective 2
+https://edu.flinga.fi/s/ECXCXME
+
 ## Developer guide
 
 This section provides instructions on how to get the backend application running locally via the command-line interface.
