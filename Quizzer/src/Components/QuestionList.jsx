@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getQuizById, getQuestionsByQuizId } from "../utils/quizapi";
+import { getQuizById, getQuestionsByQuizId, updateResults } from "../utils/quizapi";
 import { CardActionArea, RadioGroup, Typography } from "@mui/material";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -42,10 +42,37 @@ function QuestionList() {
       });
     }
   };
-  const handleSubmit = () => {
-    console.log("selected answer", JSON.stringify(selectedAnswers, null, 2)) //Debugging
-    //TODO
-  };
+
+  const handleSubmit = (questionId) => {
+    if (!selectedAnswers.answerId) {
+        console.error("No answer selected");
+        return;
+    }
+
+    updateResults(questionId, {
+        questionId: questionId,
+        answers: [{
+            id: selectedAnswers.answerId,
+            status: selectedAnswers.answerStatus
+        }]
+    })
+    .then(response => {
+        console.log("Answer submitted successfully", response);
+        setSelectedAnswers({
+            questionId: null,
+            answerId: null,
+            answerStatus: null
+        });
+        return getQuestionsByQuizId(quizId);
+    })
+    .then(updatedQuestions => {
+        setQuestions(updatedQuestions);
+    })
+    .catch(error => {
+      console.error("Error submitting answer:", error);
+      setError("Failed to submit answer. Please try again.");
+  });
+};
   
   useEffect(() => {
     if (!quizId) {

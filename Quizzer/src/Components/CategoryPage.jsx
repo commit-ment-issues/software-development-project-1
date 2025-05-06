@@ -12,12 +12,10 @@ function CategoryPage() {
   const [quizzes, setQuizzes] = useState([]);
   const [error, setError] = useState(null);
 
-  //Nimen linkki on vain placeholder. Tehty ennenkuin yksittäistä quizia on voitu tarkastella.
-  //See results linkki on vain placeholder. Tehty ennenkuin results osiota on tehty.
   const [colDefs, _setColDefs] = useState([
     {
       field: "name", headerName: "Title", cellRenderer: (params) => (
-        <Link to={`/quizzes/${params.data.quizId}`} style={{ color: "#57B9FF" }}>
+        <Link to={`/quiz/${params.data.quizId}/questions`} style={{ color: "#57B9FF" }}>
           {params.value}
         </Link>
       )
@@ -29,7 +27,7 @@ function CategoryPage() {
       headerName: "",
       cellRenderer: (params) => (
         <Link
-          to={`/results/${params.data.quizId}`}
+          to={`quiz/${params.data.quizId}/results`}
           style={{ color: "#57B9FF" }}>
           See Results
         </Link>

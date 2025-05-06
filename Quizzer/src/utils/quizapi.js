@@ -57,3 +57,19 @@ export function getQuestionsByQuizId(id) {
       return response.json();
     });
 }
+
+export function updateResults(id, answer) {
+  return fetch(`http://localhost:8080/api/question/updateanswer/${id}`,{
+    method: 'PUT',
+    headers: { 
+      'Accept': 'application/json',
+      'Content-Type': 'application/json' },
+    body: JSON.stringify(answer)
+  })
+  .then(response => {
+      if(!response.ok) {
+        throw new Error("Error in updating results")
+      }
+      return response.json();
+    })
+}

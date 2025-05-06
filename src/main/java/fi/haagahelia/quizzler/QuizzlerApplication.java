@@ -52,18 +52,18 @@ public class QuizzlerApplication {
 				quizRepo.save(quiz3);
 				quizRepo.save(quiz4);
 
-				Question question1 = new Question("What is Java?", "easy", 0, 0, 0);
+				Question question1 = new Question("What is Java?", "easy", 0, 0);
 				question1.setQuiz(quiz1);
-				Question question2 = new Question("What is Spring Boot?", "medium", 0, 0, 0);
+				Question question2 = new Question("What is Spring Boot?", "medium", 0, 0);
 				question2.setQuiz(quiz1);
-				Question question3 = new Question("Explain Dependency Injection", "hard", 0, 0, 0);
+				Question question3 = new Question("Explain Dependency Injection", "hard", 0, 0);
 				question3.setQuiz(quiz1);
 
-				Question question4 = new Question("What is Java?", "easy", 0, 0, 0);
+				Question question4 = new Question("What is Java?", "easy", 0, 0);
 				question4.setQuiz(quiz2);
-				Question question5 = new Question("What is Spring Boot?", "medium", 0, 0, 0);
+				Question question5 = new Question("What is Spring Boot?", "medium", 0, 0);
 				question5.setQuiz(quiz2);
-				Question question6 = new Question("Explain Dependency Injection", "hard", 0, 0, 0);
+				Question question6 = new Question("Explain Dependency Injection", "hard", 0, 0);
 				question6.setQuiz(quiz2);
 
 				questionRepo.save(question1);
