@@ -57,18 +57,3 @@ export function getQuestionsByQuizId(id) {
       return response.json();
     });
 }
-
-export function getAnswersByQuestionId(id) {
-  return fetch(`http://localhost:8080/api/question/${id}/answers`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    }
-  })
-    .then(response => {
-      if (!response.ok)
-        throw new Error("Error in fetch: " + response.statusText);
-      return response.json();
-    });
-}

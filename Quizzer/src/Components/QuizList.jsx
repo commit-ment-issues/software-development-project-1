@@ -20,7 +20,12 @@ function QuizList(){
         { field: "description", headerName: "Description" },
         { field: "courseCode", headerName: "Course" },
         { field: "category", headerName: "Category", cellRenderer: (params) => params.value?.name },
-        { field: "creationDate", headerName: "Added on"}
+        { field: "creationDate", headerName: "Added on"},
+        { cellRenderer: (params) => (
+            <Link to={`quiz/${params.data.quizId}/results`} style={{ color: "#57B9FF" }}>
+                See results
+            </Link>
+        )}
     ]);
 
 
@@ -35,11 +40,12 @@ function QuizList(){
     }
 
     return ( 
-        <div className="ag-theme-material" style={{ width: "100%", height: 400 }}>
+        <div className="ag-theme-material">
             <h1>Quizzes</h1>
             <AgGridReact
                 rowData={quizzes}
                 columnDefs={colDefs}
+                domLayout='autoHeight'
             />
         </div>
     )
