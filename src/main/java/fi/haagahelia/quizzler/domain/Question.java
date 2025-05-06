@@ -24,7 +24,6 @@ public class Question {
     private String questionText, difficulty;
     private Integer totalAnswers = 0;
     private Integer correctAnswers = 0;
-    private Integer wrongAnswers = 0;
 
     @JsonIgnore
     @ManyToOne
@@ -38,13 +37,11 @@ public class Question {
     public Question() {
     }
 
-    public Question(String questionText, String difficulty, Integer totalAnswers, Integer correctAnswers,
-            Integer wrongAnswers) {
+    public Question(String questionText, String difficulty, Integer totalAnswers, Integer correctAnswers) {
         this.questionText = questionText;
         this.difficulty = difficulty;
         this.totalAnswers = totalAnswers;
         this.correctAnswers = correctAnswers;
-        this.wrongAnswers = wrongAnswers;
     }
 
     public long getQuestionId() {
@@ -102,14 +99,5 @@ public class Question {
     public void setCorrectAnswers(Integer correctAnswers) {
         this.correctAnswers = correctAnswers;
     }
-
-    public Integer getWrongAnswers() {
-        return wrongAnswers;
-    }
-
-    public void setWrongAnswers(Integer wrongAnswers) {
-        this.wrongAnswers = wrongAnswers;
-    }
-
 
 }
