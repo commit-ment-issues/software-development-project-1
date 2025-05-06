@@ -15,6 +15,8 @@ import fi.haagahelia.quizzler.domain.Question;
 import fi.haagahelia.quizzler.domain.QuestionRepository;
 import fi.haagahelia.quizzler.domain.Quiz;
 import fi.haagahelia.quizzler.domain.QuizRepository;
+import fi.haagahelia.quizzler.domain.Review;
+import fi.haagahelia.quizzler.domain.ReviewRepository;
 import fi.haagahelia.quizzler.domain.Category;
 import fi.haagahelia.quizzler.domain.CategoryRepository;
 
@@ -28,7 +30,7 @@ public class QuizzlerApplication {
 
 	@Bean
 	public CommandLineRunner quizDemo(QuizRepository quizRepo, QuestionRepository questionRepo,
-			AnswersRepository answersRepo, CategoryRepository categoryRepo) {
+			AnswersRepository answersRepo, CategoryRepository categoryRepo, ReviewRepository reviewRepo) {
 		return args -> {
 			if (quizRepo.count() == 0) {
 
@@ -51,6 +53,15 @@ public class QuizzlerApplication {
 				quizRepo.save(quiz2);
 				quizRepo.save(quiz3);
 				quizRepo.save(quiz4);
+
+				Review review1 = new Review("Student 1", 5, "Great quiz!");
+				review1.setQuiz(quiz1);
+				Review review2 = new Review("Student 2", 4, "Very informative.");
+				review2.setQuiz(quiz1);
+
+				reviewRepo.save(review1);
+				reviewRepo.save(review2);
+
 
 				Question question1 = new Question("What is Java?", "easy", 0, 0);
 				question1.setQuiz(quiz1);
