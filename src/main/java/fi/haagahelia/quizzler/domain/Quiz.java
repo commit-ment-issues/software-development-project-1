@@ -34,6 +34,8 @@ public class Quiz {
     @JoinColumn(name = "categoryid")
     private Category category;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz")
+    private List<Review> reviews;
 
     public Quiz() {
     }
