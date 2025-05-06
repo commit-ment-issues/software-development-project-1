@@ -1,63 +1,52 @@
 import React from 'react';
+import { HashRouter, Route, Routes, Link } from 'react-router-dom';
 import Container from "@mui/material/Container"
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography';
-import { Link, Outlet } from 'react-router-dom';
+import CssBaseline from '@mui/material/CssBaseline';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+
 
 import QuizList from './Components/QuizList';
-import { AppBar, CssBaseline, Stack, Toolbar } from '@mui/material';
+import QuestionList from './Components/QuestionList';
+import CategoryList from './Components/CategoryList';
+import CategoryPage from './Components/CategoryPage';
+import ResultsPage from './Components/ResultsPage';
 
 function App() {
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  }
+
   return (
-    <>
-      <CssBaseline />
-      <Stack flexDirection="column">
-        <AppBar position='static'>
-          <Toolbar>
-            <Typography variant="h4">Quizzer</Typography>
-            <nav>
-              <Link to={"/"}
-                style={{
-                  textDecoration: "none",
-                  color: "white",
-                  marginLeft: "20px",
-                }}
-              >QUIZZES</Link>
+    <HashRouter>
+      <Container maxwidth="xl">
+        <Box sx={{ color: 'primary.contrastText', p: 2 }}>
+          <Typography variant="h4" color='black' paddingTop={1} align='center'>Quizzer</Typography>
 
-              <Link to={"categories"}
-                style={{
-                  textDecoration: "none",
-                  color: "white",
-                  marginLeft: "15px",
-                }}
-              >CATEGORIES</Link>
-            </nav>
-          </Toolbar>
-        </AppBar>
+          <Tabs value={value} onChange={handleChange} aria-label='navigation tabs' centered>
+            <Tab 
+            label="Quizzes" 
+            component={Link} to='/' />
+            <Tab 
+            label="Categories" 
+            component={Link} to='/categories' />
+          </Tabs>
+        </Box>
 
-      </Stack>
-      <Outlet />
+        <Routes>
+          <Route path='/' element={<QuizList />} />
+          <Route path='/quiz/:quizId/questions' element={<QuestionList />} />
+          <Route path='/quiz/:quizId/results' element= {<ResultsPage />} />
+          <Route path='/categories' element={<CategoryList />} />
+          <Route path='/categories/:categoryid' element={<CategoryPage />} />
+        </Routes>
 
-      <Box
-        mt={3}
-        ml={1}
-        mr={1}
-      >
-        <Typography variant="h4">Quizzes</Typography>
-      </Box>
-
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        mt={3}
-        ml={1}
-        mr={1}
-      >
-        <QuizList />
-      </Box>
-    </>
+        <CssBaseline />
+      </Container>
+    </HashRouter>
   )
 }
 

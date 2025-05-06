@@ -1,5 +1,5 @@
 export function getQuizzes() {
-  return fetch("http://localhost:8080/api/quizzes", {
+  return fetch('http://localhost:8080/api/quizzes/', {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -14,7 +14,7 @@ export function getQuizzes() {
 }
 
 export function getPublishedQuizzes() {
-  return fetch("http://localhost:8080/api/quizzes/published", {
+  return fetch('http://localhost:8080/api/quizzes/published', {
     method: "GET",
     headers: {
       Accept: "application/json",

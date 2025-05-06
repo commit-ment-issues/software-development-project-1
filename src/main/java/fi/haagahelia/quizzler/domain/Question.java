@@ -16,11 +16,15 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Question {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long questionId;
 
     private String questionText, difficulty;
+    private Integer totalAnswers = 0;
+    private Integer correctAnswers = 0;
+    private Integer wrongAnswers = 0;
 
     @JsonIgnore
     @ManyToOne
@@ -34,9 +38,13 @@ public class Question {
     public Question() {
     }
 
-    public Question(String questionText, String difficulty) {
+    public Question(String questionText, String difficulty, Integer totalAnswers, Integer correctAnswers,
+            Integer wrongAnswers) {
         this.questionText = questionText;
         this.difficulty = difficulty;
+        this.totalAnswers = totalAnswers;
+        this.correctAnswers = correctAnswers;
+        this.wrongAnswers = wrongAnswers;
     }
 
     public long getQuestionId() {
@@ -78,5 +86,30 @@ public class Question {
     public void setAnswers(List<Answers> answers) {
         this.answers = answers;
     }
+
+    public Integer getTotalAnswers() {
+        return totalAnswers;
+    }
+
+    public void setTotalAnswers(Integer totalAnswers) {
+        this.totalAnswers = totalAnswers;
+    }
+
+    public Integer getCorrectAnswers() {
+        return correctAnswers;
+    }
+
+    public void setCorrectAnswers(Integer correctAnswers) {
+        this.correctAnswers = correctAnswers;
+    }
+
+    public Integer getWrongAnswers() {
+        return wrongAnswers;
+    }
+
+    public void setWrongAnswers(Integer wrongAnswers) {
+        this.wrongAnswers = wrongAnswers;
+    }
+
 
 }

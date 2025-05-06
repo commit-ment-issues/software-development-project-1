@@ -1,89 +1,127 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Box, Typography, Divider } from "@mui/material";
-import { getQuizById, getQuestionsByQuizId } from "../api"; // Muista importata getQuizById ja getQuestionsByQuizId
-import { Link } from "react-router-dom"; // Lisää Link import
+import { getQuizById, getQuestionsByQuizId } from "../utils/quizapi";
+import { CardActionArea, RadioGroup, Typography } from "@mui/material";
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Item from '@mui/material/Grid';
+import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup';
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from "@mui/material/FormLabel";
+import Button from '@mui/material/Button';
+import Radio from "@mui/material/Radio";
+import Card from "@mui/material/Card";
+import CardContent from '@mui/material/CardContent';
 
-export default function QuestionList() {
-  const { id } = useParams(); // Saamme quizId URL:sta
-  const [quiz, setQuiz] = useState(null);
+
+
+function QuestionList() {
+  const quizId = useParams().quizId;
+  const [quiz, setQuiz] = useState([]);
   const [questions, setQuestions] = useState([]);
-  const [loading, setLoading] = useState(true); // Ylläpidetään lataustilaa
-  const [error, setError] = useState(null); // Ylläpidetään virheilmoitusta
+  const [error, setError] = useState(null);
+  const [selectedAnswers, setSelectedAnswers] = useState({
+    questionId: null,
+    answerId: null,
+    answerStatus: null
+  });
 
-  useEffect(() => {
-    // Hakee quizin tiedot
-    getQuizById(id)
-      .then((data) => {
-        setQuiz(data);
-        return getQuestionsByQuizId(id); // Hakee kysymykset samalla
-      })
-      .then((data) => {
-        setQuestions(data);
-        setLoading(false); // Lataus valmis
-      })
-      .catch((error) => {
-        setError("An error occurred while fetching the quiz data.");
-        setLoading(false); // Lataus valmis vaikka virhe
+  const handleChange = (e, questionId) => {
+    const answerId = parseInt(e.target.value);
+    const answer = questions
+      .find(q => q.questionId === questionId)
+      ?.answers.find(a => a.id === answerId);
+
+    if (answer) {
+      setSelectedAnswers({
+        questionId: questionId,
+        answerId: answerId,
+        answerStatus: answer.status
       });
-  }, [id]);
+    }
+  };
+  const handleSubmit = () => {
+    console.log("selected answer", JSON.stringify(selectedAnswers, null, 2)) //Debugging
+    //TODO
+  };
+  
+  useEffect(() => {
+    if (!quizId) {
+      setError("Quiz ID is missing from URL.");
+      return;
+    }
+    getQuizById(quizId)
+      .then(data => {
+        setQuiz(data);
+        return getQuestionsByQuizId(quizId);
+      })
+      .then(questions => {
+        setQuestions(questions);
+        console.log(questions);
+      })
+      .catch((err) => setError(err.message));
+  }, [quizId]);
 
-  // Jos on lataus
-  if (loading) {
-    return <Typography>Loading...</Typography>;
-  }
-
-  // Jos virhe
-  if (error) {
-    return <Typography color="error">{error}</Typography>;
-  }
-
-  // Jos quiz ei ole löytynyt
-  if (!quiz) {
-    return <Typography>Quiz not found.</Typography>;
-  }
+  if (error) return <div>Error: {error}</div>;
+  if (!quiz) return <div>Loading...</div>;
 
   return (
-    <Box sx={{ maxWidth: "800px", mx: "auto", mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        {quiz.name}
-      </Typography>
+    <div className="ag-theme-material" style={{ width: "100%", height: 400 }}>
 
-      <Typography variant="body1" gutterBottom>
-        {quiz.description}
-      </Typography>
-
-      <Divider sx={{ my: 2 }} />
-
-      <Typography variant="body2">
-        <strong>Added on:</strong> {quiz.creationDate}
-      </Typography>
-      <Typography variant="body2">
-        <strong>Questions:</strong> {questions.length}
-      </Typography>
-      <Typography variant="body2">
-        <strong>Course code:</strong> {quiz.courseCode}
-      </Typography>
-      <Typography variant="body2" gutterBottom>
-        <strong>Category:</strong> {quiz.category ? quiz.category.name : "No category"}
-      </Typography>
-
-      <Divider sx={{ my: 2 }} />
-
-      <Typography variant="h5" gutterBottom>
-        Questions:
-      </Typography>
-      {questions.length > 0 ? (
-        questions.map((question, index) => (
-          <Box key={question.questionId} sx={{ mb: 2 }}>
-            <Typography variant="body1">
-              {index + 1}. {question.text}
-            </Typography>
-          </Box>
-        ))
-      ) : (
-        <Typography>No questions found.</Typography>
-      )}
-    </Box>
+      <h1>{quiz.name}</h1>
+      <h2>{quiz.description}</h2>
+      <h4>Questions:</h4>
+      <Box sx={{ width: "100%", height: 400 }}>
+        {questions.length > 0 ? (questions.map((q, index) => (
+            <Card sx={{ maxWidth: 800, mb: 2 }} key={q.id || q.questionId}>
+              <CardActionArea>
+                <CardContent>
+                  <Typography variant="h5">
+                    {index + 1}. {q.questionText || q.text}
+                  </Typography>
+                  <Typography variant="subtitle1">
+                  Question {index + 1} of {questions.length} - difficulty: {q.difficulty}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+              <CardContent>
+                <FormControl>
+                  <RadioGroup
+                    aria-labelledby={`radio-buttons-${q.questionId}`}
+                    name={`question-${q.questionId}`}
+                    value={(selectedAnswers.questionId === q.questionId && selectedAnswers.answerId) 
+                      ? selectedAnswers.answerId.toString() 
+                      : ''}
+                    onChange={(e) => handleChange(e, q.questionId)}
+                  >
+                    {q.answers.map((answer) => (
+                      <FormControlLabel 
+                        key={answer.id}
+                        value={answer.id}
+                        control={<Radio />} 
+                        label={answer.text} 
+                      />
+                    ))}
+                  </RadioGroup>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleSubmit(q.questionId)}
+                    sx={{ width: 200, mt: 2 }}
+                  >
+                    Submit answer
+                  </Button>
+                </FormControl>
+              </CardContent>
+            </Card>
+          ))) : (
+            <Typography variant="body1">No questions found.</Typography>
+          )}
+      </Box>
+    </div>
   );
 }
+
+export default QuestionList;
