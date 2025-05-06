@@ -47,4 +47,117 @@ This section provides instructions on how to get the backend application running
 
     visit http://localhost:8080/
 
+## Data model
+
+```mermaid
+erDiagram
+    QUIZ ||--o{ QUESTION : 1N
+
+    CATEGORY ||--o{ QUIZ : 1N
+
+    ANSWERS o{--|| QUESTION : N1
+
+
+    USER {
+        int id
+        string name
+        string email
+        string password
+    }
+    QUIZ {
+        long quizId
+        string name
+        string description
+        string courseCode
+        int publishedStatus
+        LocalDate creationDate
+    }
+    QUESTION {
+        int id
+        string questionText
+        string difficulty
+    }
+    ANSWERS {
+        int id
+        string text
+        int status
+    }
+    CATEGORY {
+        int id
+        string name
+        string description
+    }
+```
+### Entities
+
+#### USER
+- Represents the user of the application
+- Attributes:
+    - id: Unique identifier for user
+    - name: Name of the user
+    - email: Email of the user
+    - password: Password for user authentication
+- Relationships:
+    - There are currently no relationship between user or any other entity
+
+#### QUIZ
+- Represents a quiz created by a user
+- Attributes:
+    - quizId: Unique identifier for the quiz
+    - name: Name of the quiz
+    - description: Description of the quiz
+    - courseCode: Code for the course associated with the quiz
+    - publishedStatus: Status that indicates whether the quiz is published or not
+    - creationDate: Date for when the quiz was created
+- Relationships:
+    - One-to-Many relationship with QUESTION
+    - Many-to-One relationship with CATEGORY
+
+#### QUESTION
+- Represents a question in a quiz
+- Attributes:
+    - id: Unique identifier for the question
+    - questionText: The text of the question
+    - difficulty: Difficulty level for the question
+- Relationships:
+    - Many-to-One with QUIZ
+    - One-to-Many with ANSWERS
+
+#### ANSWERS
+- Represents possible answers to a question
+- Attributes:
+    - id: Unique identifier for the answer
+    - text: The text of the answer
+    - status: Indicates whether the answer is correct or not
+- Relationships:
+    - Many-to-One with QUESTION
+
+#### CATEGORY
+
+- Represents a category to which quizzes can belong
+- Attributes:
+    - id: Unique identifier for the category
+    - name: Name of the category
+    - description: Description of the category
+- Relationships: One-to-Many with QUIZ
+
+### Frontend
+
+1. **Navigate to the frontend folder**
+    
+    ```bash
+    cd Quizzer
+2. **Install dependencies**
+    
+    ```bash
+    npm install
+3. **Start the frontend application**
+    
+    ```bash
+    npm run dev
+4. **Access the frontend**
+    
+    Open your browser and visit the URL displayed in the terminal (e.g. http://localhost:5173/).
+
+
 
