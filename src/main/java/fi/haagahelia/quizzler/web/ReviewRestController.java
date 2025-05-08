@@ -17,6 +17,9 @@ import fi.haagahelia.quizzler.domain.Quiz;
 import fi.haagahelia.quizzler.domain.ReviewRepository;
 import fi.haagahelia.quizzler.domain.QuizRepository;
 import fi.haagahelia.quizzler.domain.Review;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api")
@@ -28,6 +31,17 @@ public class ReviewRestController {
 
     @Autowired
     private QuizRepository quizRepository;
+
+    @GetMapping("/reviews")
+    public List<Review> getAllReviews() {
+        List<Review> reviews = reviewRepository.findAll();
+        if (reviews.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "No reviews found");
+        }
+
+        return reviews;
+    }
 
     @GetMapping("/reviews/quiz/{id}")
     public List<Review> getReviewsByQuizId(@PathVariable Long id) {
@@ -43,6 +57,16 @@ public class ReviewRestController {
         }
 
         return reviews;
+    }
+
+    @PostMapping("/quizzes/{quizId}/reviews")
+    public Review addReviewToQuiz(@PathVariable Long quizId, @RequestBody Review review) {
+        Quiz quiz = quizRepository.findById(quizId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Quiz with ID " + quizId + " not found"));
+
+        review.setQuiz(quiz);
+        return reviewRepository.save(review);
     }
 
 }
