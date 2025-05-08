@@ -40,7 +40,8 @@ public class Quiz {
     public Quiz() {
     }
 
-    public Quiz(String name, String description, String courseCode, Integer publishedStatus, LocalDate creationDate, Category category) {
+    public Quiz(String name, String description, String courseCode, Integer publishedStatus, LocalDate creationDate,
+            Category category) {
         this.name = name;
         this.description = description;
         this.courseCode = courseCode;
@@ -111,6 +112,14 @@ public class Quiz {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
 }
