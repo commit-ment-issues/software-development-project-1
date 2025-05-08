@@ -44,20 +44,14 @@ public class ReviewRestController {
     }
 
     @GetMapping("/reviews/quiz/{id}")
-    public List<Review> getReviewsByQuizId(@PathVariable Long id) {
-        Quiz quiz = quizRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Quiz with ID " + id + " not found"));
+public List<Review> getReviewsByQuizId(@PathVariable Long id) {
+    Quiz quiz = quizRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Quiz with ID " + id + " not found"));
 
-        List<Review> reviews = reviewRepository.findByQuiz_QuizId(id);
+    return reviewRepository.findByQuiz_QuizId(id); 
+}
 
-        if (reviews.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "No reviews found for quiz ID " + id);
-        }
-
-        return reviews;
-    }
 
     @PostMapping("/quizzes/{quizId}/reviews")
     public Review addReviewToQuiz(@PathVariable Long quizId, @RequestBody Review review) {
