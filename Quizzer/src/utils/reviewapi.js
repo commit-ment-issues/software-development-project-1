@@ -14,7 +14,7 @@ export async function getReviews() {
 }
 
 export async function addReview() {
-  return fetch('http://localhost:8080/api/quizzes/${quizId}/reviews', {
+  return fetch(`http://localhost:8080/api/quizzes/${quizId}/reviews`, {
     method: "POST",
     headers: {
       Accept: "application/json",
