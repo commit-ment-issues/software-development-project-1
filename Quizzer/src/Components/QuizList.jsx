@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import { Link } from "react-router-dom";
 
-import { getPublishedQuizzes } from "../utils/quizapi";
+import { getPublishedQuizzes } from "../utils/quizApi";
 
 ModuleRegistry.registerModules([AllCommunityModule])
 
@@ -27,8 +27,8 @@ function QuizList(){
             </Link>
         )},
         { cellRenderer: (params) => (
-            <Link to={`quiz/${params.data.quizId}/addreview`} style={{ color: "#57B9FF" }}>
-                Add review
+            <Link to={`quiz/${params.data.quizId}/reviewlist`} style={{ color: "#57B9FF" }}>
+                See reviews
             </Link>
         )}
     ]);
