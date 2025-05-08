@@ -25,6 +25,11 @@ function QuizList(){
             <Link to={`quiz/${params.data.quizId}/results`} style={{ color: "#57B9FF" }}>
                 See results
             </Link>
+        )},
+        { cellRenderer: (params) => (
+            <Link to={`quiz/${params.data.quizId}/addreview`} style={{ color: "#57B9FF" }}>
+                Add review
+            </Link>
         )}
     ]);
 
