@@ -13,10 +13,19 @@ function ReviewList() {
     const fetchQuizAndReviews = async () => {
       try {
         const quizData = await getQuizById(quizId);
-        const quizReviews = await getReviewsByQuizId(quizId); 
-  
         setQuiz(quizData);
-        setReviews(quizReviews);
+  
+        try {
+          const quizReviews = await getReviewsByQuizId(quizId); 
+          setReviews(quizReviews);
+        } catch (error) {
+          if (error.message.includes("404")) {
+            setReviews([]); // ei löytynyt arvosteluja
+          } else {
+            throw error;
+          }
+        }
+  
         setLoading(false);
       } catch (error) {
         console.error("Data fetch error:", error);
@@ -25,6 +34,7 @@ function ReviewList() {
   
     fetchQuizAndReviews();
   }, [quizId]);
+  
 
   if (loading) return <div>Loading...</div>;
 
