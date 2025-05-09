@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import { Link } from "react-router-dom";
 
-import { getPublishedQuizzes } from "../utils/quizApi";
+import { getPublishedQuizzes } from "../utils/quizapi";
 
 ModuleRegistry.registerModules([AllCommunityModule])
 

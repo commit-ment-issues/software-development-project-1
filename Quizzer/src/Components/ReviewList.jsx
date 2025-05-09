@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getQuizById } from '../utils/quizApi';
-import { getReviewsByQuizId } from '../utils/reviewApi'; // Oletetaan, että tämä funktio hakee kaikki arvostelut
+import { getQuizById } from '../utils/quizapi';
+import { getReviewsByQuizId } from '../utils/reviewapi'; 
 
 function ReviewList() {
   const { quizId } = useParams();
