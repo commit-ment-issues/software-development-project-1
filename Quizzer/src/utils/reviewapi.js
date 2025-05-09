@@ -13,13 +13,14 @@ export async function getReviews() {
     });
 }
 
-export async function addReview() {
-  return fetch(`http://localhost:8080/api/quizzes/${quizId}/reviews`, {
+export async function saveReview(id, review) {
+  return fetch(`http://localhost:8080/api/quizzes/${id}/reviews`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
-    }
+    },
+    body: JSON.stringify(review)
   })
     .then(response => {
       if (!response.ok)

@@ -1,7 +1,26 @@
-import { useState } from "react";
-import {DialogActions, DialogContent, DialogTitle, TextField, Snackbar, Alert, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio,} from '@mui/material';
+import { useState, useEffect } from "react";
+import { DialogActions, DialogContent, DialogTitle, TextField, Snackbar, Alert, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, } from '@mui/material';
+import { useParams } from "react-router-dom";
+import { getQuizById } from "../utils/quizapi";
+import { saveReview } from "../utils/reviewapi";
 
-export default function AddReview({ quiz, saveReview }) {
+export default function AddReview() {
+
+    const { quizId } = useParams();
+    const [quiz, setQuiz] = useState(null);
+
+    useEffect(() => {
+        const fetchQuiz = async () => {
+            try {
+                const quizData = await getQuizById(quizId);
+                setQuiz(quizData);
+            } catch (error) {
+                console.error("Error fetching quiz:", error);
+            }
+        };
+        fetchQuiz();
+    }, [quizId]);
+
     const [review, setReview] = useState({
         reviewerNickname: "",
         rating: 0,
@@ -36,8 +55,15 @@ export default function AddReview({ quiz, saveReview }) {
         }
 
         try {
-            await saveReview(review);
+            await saveReview(quizId, review);
             setSnackbarOpen(true);
+
+            setReview({
+                reviewerNickname: "",
+                rating: 0,
+                reviewText: "",
+            });
+
             handleClose();
         } catch (error) {
             console.error("Error saving review:", error);
