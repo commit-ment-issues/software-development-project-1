@@ -113,6 +113,8 @@ public class QuizzlerApplication {
 				answersRepo.save(answer5);
 				answersRepo.save(answer6);
 
+				log.info("All done!");
+
 			}
 		};
 	}
