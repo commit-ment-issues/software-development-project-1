@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
     public List<Quiz> findAllByPublishedStatus(Integer status);
     public List<Quiz> findByCategory(Category category);
+    public List<Quiz> findByPublishedStatusAndCategory(int publishedStatus, Category category);
 }
