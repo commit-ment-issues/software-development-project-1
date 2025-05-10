@@ -54,9 +54,9 @@ public class QuizzlerApplication {
 				quizRepo.save(quiz3);
 				quizRepo.save(quiz4);
 
-				Review review1 = new Review("Student 1", 5, "Great quiz!");
+				Review review1 = new Review("Student 1", 5, "Great quiz!", LocalDate.now());
 				review1.setQuiz(quiz1);
-				Review review2 = new Review("Student 2", 4, "Very informative.");
+				Review review2 = new Review("Student 2", 4, "Very informative.", LocalDate.now());
 				review2.setQuiz(quiz1);
 
 				reviewRepo.save(review1);

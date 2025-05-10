@@ -1,9 +1,12 @@
 package fi.haagahelia.quizzler.domain;
 
-import org.hibernate.annotations.ManyToAny;
+import java.time.LocalDate;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +25,10 @@ public class Review {
     private int rating;
     private String reviewText;
 
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDate date;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "quizId")
@@ -30,10 +37,11 @@ public class Review {
     public Review() {
     }
 
-    public Review(String reviewerNickname, int rating, String reviewText) {
+    public Review(String reviewerNickname, int rating, String reviewText, LocalDate date) {
         this.reviewerNickname = reviewerNickname;
         this.rating = rating;
         this.reviewText = reviewText;
+        this.date = date;
     }
 
     public long getReviewId() {
@@ -68,6 +76,14 @@ public class Review {
         this.reviewText = reviewText;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public Quiz getQuiz() {
         return quiz;
     }
@@ -75,8 +91,5 @@ public class Review {
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
     }
-
-    
-
 
 }
