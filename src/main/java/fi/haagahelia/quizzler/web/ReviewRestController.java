@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
-@Tag(name = "Answers", description = "Operations for retrieving and manipulating answers")
+@Tag(name = "Reviews", description = "Operations for retrieving and manipulating Reviews")
 public class ReviewRestController {
 
     @Autowired
