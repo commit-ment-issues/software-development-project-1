@@ -15,6 +15,7 @@ import CategoryPage from './Components/CategoryPage';
 import ResultsPage from './Components/ResultsPage';
 import AddReview from './Components/AddReview';
 import ReviewList from './Components/ReviewList';
+import EditReview from './Components/EditReview';
 
 function App() {
   const [value, setValue] = React.useState(0);
@@ -46,6 +47,7 @@ function App() {
           <Route path='/categories/:categoryid' element={<CategoryPage />} />
           <Route path='/quiz/:quizId/addreview' element={<AddReview />} />
           <Route path='/quiz/:quizId/reviewlist' element={<ReviewList/>} />
+          <Route path="/editreview/:reviewId" element={<EditReview />} />
         </Routes>
 
         <CssBaseline />
