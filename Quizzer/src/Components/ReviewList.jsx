@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getQuizById } from '../utils/quizapi';
-import { getReviewsByQuizId } from '../utils/reviewapi'; 
+import { getReviewsByQuizId } from '../utils/reviewapi';
 
 function ReviewList() {
   const { quizId } = useParams();
@@ -14,9 +14,9 @@ function ReviewList() {
       try {
         const quizData = await getQuizById(quizId);
         setQuiz(quizData);
-  
+
         try {
-          const quizReviews = await getReviewsByQuizId(quizId); 
+          const quizReviews = await getReviewsByQuizId(quizId);
           setReviews(quizReviews);
         } catch (error) {
           if (error.message.includes("404")) {
@@ -25,16 +25,16 @@ function ReviewList() {
             throw error;
           }
         }
-  
+
         setLoading(false);
       } catch (error) {
         console.error("Data fetch error:", error);
       }
     };
-  
+
     fetchQuizAndReviews();
   }, [quizId]);
-  
+
 
   if (loading) return <div>Loading...</div>;
 
@@ -56,6 +56,11 @@ function ReviewList() {
             <p>Rating: {review.rating}/5</p>
             <p>{review.reviewText}</p>
             <p><small>Written on: {new Date(review.date).toLocaleDateString()}</small></p>
+
+            <Link
+              to={`/editreview/${review.reviewId}`} style={{ color: '#57B9FF' }}>
+              Edit
+            </Link>
           </div>
         ))}
       </div>
