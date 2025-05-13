@@ -1,5 +1,4 @@
 const baseurl = import.meta.env.VITE_BACKEND_URL
-// https://software-development-project-1-git-quizzer.2.rahtiapp.fi/api/
 
 export function getCategories() {
     return fetch(`${baseurl}/categories`, {
