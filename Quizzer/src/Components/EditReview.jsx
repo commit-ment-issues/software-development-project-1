@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Container, DialogTitle, DialogContent, DialogActions, TextField, FormControl,
-  FormLabel, RadioGroup, FormControlLabel, Radio, Button, Typography, CircularProgress } from '@mui/material';
+import { Container, DialogTitle, DialogContent, TextField, FormControl,
+  FormLabel, RadioGroup, FormControlLabel, Radio, Button } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 
+const baseurl = import.meta.env.VITE_BACKEND_URL
+
 function EditReview() {
+
   const { reviewId } = useParams();
   const navigate = useNavigate();
   const [review, setReview] = useState({
@@ -13,7 +16,7 @@ function EditReview() {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/reviews/${reviewId}`)
+    fetch(`${baseurl}/reviews/${reviewId}`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch review');
         return res.json();
@@ -36,7 +39,7 @@ function EditReview() {
   };
 
   const handleUpdateReview = () => {
-    fetch(`http://localhost:8080/api/reviews/edit/${reviewId}`, {
+    fetch(`${baseurl}/reviews/edit/${reviewId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(review)
