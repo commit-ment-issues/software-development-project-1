@@ -213,6 +213,9 @@ erDiagram
     - date: Creation date for the review
 - Relationships: Many-to-One with QUIZ
 
+## License
+This project is licensed under the terms of the [MIT license.](./LICENSE.txt)
+
 
 ## How to run the tests on the command-line
 
@@ -220,7 +223,4 @@ erDiagram
 
    ```bash
     ./mvnw test
-    ```
 
-## License
-This project is licensed under the terms of the [MIT license.](./LICENSE.txt)
