@@ -216,10 +216,11 @@ erDiagram
 
 ## How to run the tests on the command-line
 
- **Run the backend tests:**
+### Run the backend tests:
 
    ```bash
     ./mvnw test
+    ```
 
 ## License
 This project is licensed under the terms of the [MIT license.](./LICENSE.txt)
