@@ -60,10 +60,8 @@ This section provides instructions on how to get the backend application running
    ```bash
    git clone (https://github.com/commit-ment-issues/software-development-project-1.git)
 
-   ```bash
    git clone (git@github.com:commit-ment-issues/software-development-project-1.git)
 
-    ```bash
    cd 'repository-directory'
 
 2. **Build the project**
@@ -107,7 +105,7 @@ erDiagram
 
     ANSWERS o{--|| QUESTION : N1
 
-    REVIEW o{--|| QUIZ
+    REVIEW o{--|| QUIZ : N1
 
     REVIEW {
         long reviewId
@@ -204,7 +202,7 @@ erDiagram
     - description: Description of the category
 - Relationships: One-to-Many with QUIZ
 
-### REVIEW
+#### REVIEW
 
 - Represents the reviews of a quiz
 - Attributes:
@@ -219,7 +217,8 @@ erDiagram
 ## How to run the tests on the command-line
 
  **Run the backend tests:**
-    ```bash
+
+   ```bash
     ./mvnw test
 
 ## License
