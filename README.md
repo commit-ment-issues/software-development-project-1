@@ -24,7 +24,7 @@ https://software-development-project-1-git-quizzer.2.rahtiapp.fi
 |-----------|------------------|
 | Backend   | Java, Spring Boot|
 | Build Tool| Maven            |
-| Frontend  | HTML, CSS, JavaScript|
+| Frontend  | React, HTML, CSS, JavaScript|
 | Database  | H2 / PostgreSQL |
 
 ## Contributors
