@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -42,12 +43,13 @@ public class QuestionRestControllerTest {
         Quiz quiz = new Quiz();
         quiz.setName("Empty Quiz");
         quiz = quizRepository.save(quiz);
-
+    
         mockMvc.perform(get("/api/quiz/" + quiz.getQuizId() + "/questions")
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.length()").value(0));
+                .andExpect(status().isNotFound());
+
+        List<Question> questions = questionRepository.findByQuiz_QuizId(quiz.getQuizId());
+        assertEquals(0, questions.size());
     }
 
     @Test
