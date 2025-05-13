@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getQuizById } from '../utils/quizapi';
 import { getReviewsByQuizId } from '../utils/reviewapi';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 
 function ReviewList() {
   const { quizId } = useParams();
   const [quiz, setQuiz] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [reviewToDelete, setReviewToDelete] = useState(null);
 
   useEffect(() => {
     const fetchQuizAndReviews = async () => {
@@ -35,20 +38,30 @@ function ReviewList() {
     fetchQuizAndReviews();
   }, [quizId]);
 
-  const handleDeleteReview = async (reviewId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this review?");
-    if (!confirmDelete) return;
-
+  const handleDeleteReview = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/reviews/${reviewId}`, {
+      const response = await fetch(`http://localhost:8080/api/reviews/${reviewToDelete}`, {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Failed to delete review');
-      setReviews(reviews.filter((review) => review.reviewId !== reviewId));
+      setReviews(reviews.filter((review) => review.reviewId !== reviewToDelete));
     } catch (error) {
       console.error('Error deleting review:', error);
+    } finally {
+      setOpenDialog(false);
+      setReviewToDelete(null);
     }
   };
+
+  const openDeleteDialog = (reviewId) => {
+    setReviewToDelete(reviewId);
+    setOpenDialog(true);
+  }
+
+  const closeDialog = () => {
+    setOpenDialog(false);
+    setReviewToDelete(null);
+  }
 
   if (loading) return <div>Loading...</div>;
 
@@ -76,7 +89,7 @@ function ReviewList() {
               Edit
             </Link>
             <button
-              onClick={() => handleDeleteReview(review.reviewId)}
+              onClick={() => openDeleteDialog(review.reviewId)}
               style={{ color: 'red', marginLeft: '10px', background: 'none', border: 'none', cursor: 'pointer' }}
             >
               Delete
@@ -84,6 +97,22 @@ function ReviewList() {
           </div>
         ))}
       </div>
+      <Dialog open={openDialog} onClose={closeDialog}>
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this review?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteReview} color="error">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
