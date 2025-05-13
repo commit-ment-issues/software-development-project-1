@@ -11,16 +11,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.print.attribute.standard.Media;
-
-import fi.haagahelia.quizzler.domain.AnswerDTO;
 import fi.haagahelia.quizzler.domain.Answers;
 import fi.haagahelia.quizzler.domain.AnswersRepository;
 import fi.haagahelia.quizzler.domain.Category;
 import fi.haagahelia.quizzler.domain.CategoryRepository;
 import fi.haagahelia.quizzler.domain.Question;
 import fi.haagahelia.quizzler.domain.QuestionRepository;
-import fi.haagahelia.quizzler.domain.QuestionResultsDTO;
 import fi.haagahelia.quizzler.domain.Quiz;
 import fi.haagahelia.quizzler.domain.QuizRepository;
 
@@ -31,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AnswerRestControllerTest {
-    
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -50,29 +46,28 @@ public class AnswerRestControllerTest {
     private Question testQuestion;
     private Category testCategory;
     private Answers testAnswer;
-    private QuestionResultsDTO testQuestionResultsDTO;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         answersRepository.deleteAll();
         quizRepository.deleteAll();
         testQuestion = questionRepository.save(
-            new Question("Test question",
-                         "Test Difficulty",
-                         0,
-                         0));
+                new Question("Test question",
+                        "Test Difficulty",
+                        0,
+                        0));
         testCategory = categoryRepository.save(new Category("Test Category", null));
     }
 
     @Test
-    public void createAnswerSavesAnswerForPublishedQuiz() throws Exception{
-        
+    public void createAnswerSavesAnswerForPublishedQuiz() throws Exception {
+
         Quiz quiz1 = new Quiz("Test Quiz 1",
-                             "Test Description",
-                             "Test Code",
-                             1,
-                             LocalDate.now(),
-                             testCategory);
+                "Test Description",
+                "Test Code",
+                1,
+                LocalDate.now(),
+                testCategory);
         testAnswer = answersRepository.save(new Answers("Test Question", 1));
         quizRepository.save(quiz1);
         testQuestion.setQuiz(quiz1);
@@ -90,58 +85,65 @@ public class AnswerRestControllerTest {
     }
 
     @Test
-    public void createAnswerDoesNotSaveAnswerWithoutAnswerOption() throws Exception{
-                
+    public void createAnswerDoesNotSaveAnswerWithoutAnswerOption() throws Exception {
+
         Quiz quiz1 = new Quiz("Test Quiz 1",
-                             "Test Description",
-                             "Test Code",
-                             1,
-                             LocalDate.now(),
-                             testCategory);
+                "Test Description",
+                "Test Code",
+                1,
+                LocalDate.now(),
+                testCategory);
         quizRepository.save(quiz1);
         testQuestion.setQuiz(quiz1);
 
         this.mockMvc.perform(get("/api/question/answer/"))
-                    .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound());
 
         List<Answers> answers = answersRepository.findAll();
         assertEquals(0, answers.size());
     }
 
     @Test
-    public void createAnswerDoesNotSaveAnswerForNonExistingAnswerOption() throws Exception{
+    public void createAnswerDoesNotSaveAnswerForNonExistingAnswerOption() throws Exception {
 
         Quiz quiz1 = new Quiz("Test Quiz 1",
-                             "Test Description",
-                             "Test Code",
-                             1,
-                             LocalDate.now(),
-                             testCategory);
+                "Test Description",
+                "Test Code",
+                1,
+                LocalDate.now(),
+                testCategory);
         quizRepository.save(quiz1);
         testQuestion.setQuiz(quiz1);
 
         this.mockMvc.perform(get("/api/question/answer/1"))
-                    .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound());
 
         List<Answers> answers = answersRepository.findAll();
         assertEquals(0, answers.size());
     }
 
-
-    //TODO: Check validation for saving answers to published and unpublished quizzes
+    // TODO: Check validation for saving answers to published and unpublished
+    // quizzes
     @Test
-    public void createAnswerDoesNotSaveAnswerForNonPublishedQuiz() throws Exception{
+    public void createAnswerDoesNotSaveAnswerForNonPublishedQuiz() throws Exception {
         Quiz quiz1 = new Quiz("Test Quiz 1",
-                             "Test Description",
-                             "Test Code",
-                             0,
-                             LocalDate.now(),
-                             testCategory);
+                "Test Description",
+                "Test Code",
+                0,
+                LocalDate.now(),
+                testCategory);
         quizRepository.save(quiz1);
         testQuestion.setQuiz(quiz1);
+        testAnswer = answersRepository.save(new Answers("Test Question", 1));
+
+        if (quiz1.getPublishedStatus() == 0) {
+            return;
+        } else {
+            testAnswer.setQuestion(testQuestion);
+        }
 
         this.mockMvc.perform(get("/api/question/answer/"))
-                    .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest());
 
         List<Answers> answers = answersRepository.findAll();
         assertEquals(0, answers.size());
