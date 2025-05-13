@@ -1,5 +1,8 @@
+const baseurl = import.meta.env.VITE_BACKEND_URL
+// https://software-development-project-1-git-quizzer.2.rahtiapp.fi/api/
+
 export function getCategories() {
-    return fetch("http://localhost:8080/api/categories", {
+    return fetch(`${baseurl}/categories`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -14,7 +17,7 @@ export function getCategories() {
   }
   
   export function getCategoryById(id) {
-    return fetch(`http://localhost:8080/api/categories/${id}`, {
+    return fetch(`${baseurl}/categories/${id}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -29,7 +32,7 @@ export function getCategories() {
   }
 
   export function getQuizzesByCategoryId(id) {
-    return fetch(`http://localhost:8080/api/quizzes/categories/${id}`, {
+    return fetch(`${baseurl}/quizzes/categories/${id}`, {
       method: "GET",
       headers: {
         Accept: "application/json",

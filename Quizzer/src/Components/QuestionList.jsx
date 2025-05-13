@@ -10,7 +10,6 @@ import Radio from "@mui/material/Radio";
 import Card from "@mui/material/Card";
 import CardContent from '@mui/material/CardContent';
 
-//TODO add snackbar for answer feedback
 
 function QuestionList() {
   const quizId = useParams().quizId;

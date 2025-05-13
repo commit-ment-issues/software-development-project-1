@@ -1,5 +1,8 @@
+const baseurl = import.meta.env.VITE_BACKEND_URL
+// https://software-development-project-1-git-quizzer.2.rahtiapp.fi/api/
+
 export function getQuizzes() {
-  return fetch('http://localhost:8080/api/quizzes/', {
+  return fetch(`${baseurl}/quizzes`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -14,7 +17,7 @@ export function getQuizzes() {
 }
 
 export function getPublishedQuizzes() {
-  return fetch('http://localhost:8080/api/quizzes/published', {
+  return fetch(`${baseurl}/quizzes/published`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -29,7 +32,7 @@ export function getPublishedQuizzes() {
 }
 
 export function getQuizById(id) {
-  return fetch(`http://localhost:8080/api/quizzes/${id}`, {
+  return fetch(`${baseurl}/quizzes/${id}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -44,7 +47,7 @@ export function getQuizById(id) {
 }
 
 export function getQuestionsByQuizId(id) {
-  return fetch(`http://localhost:8080/api/quiz/${id}/questions`, {
+  return fetch(`${baseurl}/quiz/${id}/questions`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -59,7 +62,7 @@ export function getQuestionsByQuizId(id) {
 }
 
 export function updateResults(id, answer) {
-  return fetch(`http://localhost:8080/api/question/updateanswer/${id}`,{
+  return fetch(`${baseurl}/question/updateanswer/${id}`,{
     method: 'PUT',
     headers: { 
       'Accept': 'application/json',

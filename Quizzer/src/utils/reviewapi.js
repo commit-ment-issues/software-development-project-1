@@ -1,5 +1,8 @@
+const baseurl = import.meta.env.VITE_BACKEND_URL
+// https://software-development-project-1-git-quizzer.2.rahtiapp.fi/api/
+
 export async function getReviews() {
-  return fetch('http://localhost:8080/api/reviews', {
+  return fetch(`${baseurl}/reviews`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -14,7 +17,7 @@ export async function getReviews() {
 }
 
 export async function saveReview(id, review) {
-  return fetch(`http://localhost:8080/api/quizzes/${id}/reviews`, {
+  return fetch(`${baseurl}/quizzes/${id}/reviews`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -27,12 +30,10 @@ export async function saveReview(id, review) {
         throw new Error("Error in fetch: " + response.statusText);
       return response.json();
     });
-
-
   }
 
   export async function getReviewsByQuizId(id) {
-    const response = await fetch(`http://localhost:8080/api/reviews/quiz/${id}`);
+    const response = await fetch(`${baseurl}/reviews/quiz/${id}`);
     if (!response.ok) {
       throw new Error("Error in fetch: " + response.statusText);
     }
