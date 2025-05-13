@@ -162,5 +162,5 @@ erDiagram
     
     Open your browser and visit the URL displayed in the terminal (e.g. http://localhost:5173/).
 
-
-
+## License
+This project is licensed under the terms of the [MIT license.](./LICENSE.txt)
