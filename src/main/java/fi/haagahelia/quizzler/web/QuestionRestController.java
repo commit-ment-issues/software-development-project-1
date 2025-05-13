@@ -30,7 +30,7 @@ public class QuestionRestController {
     @Autowired
     private QuestionRepository questionRepository;
 
-    @Operation(summary = "Get a list of questions by QuizId", description = "Returns a list of questions with the provided QuizId")
+    @Operation(summary = "Get a list of questions by quiz id", description = "Returns a list of questions with the provided quiz id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of questions with the provided id retrieved succesully"),
             @ApiResponse(responseCode = "400", description = "List of questions with the provided id does not exist")
@@ -50,7 +50,7 @@ public class QuestionRestController {
     }
 
 
-    @Operation(summary = "Get a list of all the questions", description = "Retuns a list of questions")
+    @Operation(summary = "Get a list of all of the questions", description = "Retuns a list of questions")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of questions retrieved succesully"),
             @ApiResponse(responseCode = "400", description = "List of questions does not exist")
@@ -63,7 +63,7 @@ public class QuestionRestController {
     }
     
 
-    @Operation(summary = "Update answer statistics for a question by id", description = "Updates the number of correct and total answers for a question using the provided QuestionResultsDTO.")
+    @Operation(summary = "Update answer statistics for a question by id", description = "Updates the number of correct and total answers for a question using the provided QuestionResultsDTO")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Answer statistics updated successfully"),
             @ApiResponse(responseCode = "400", description = "Question not found with the provided id")

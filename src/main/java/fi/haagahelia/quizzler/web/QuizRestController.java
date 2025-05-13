@@ -24,7 +24,7 @@ import fi.haagahelia.quizzler.domain.Category;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
-@Tag(name = "Quizzes", description = "Operations for retrieving and manipulating quizzes")
+@Tag(name = "Quizzes", description = "Operations for retrieving quizzes")
 public class QuizRestController {
     @Autowired
     private QuizRepository quizRepository;
@@ -45,7 +45,7 @@ public class QuizRestController {
     }
 
 
-    @Operation(summary = "Get all quizzes", description = "Returns a list of all the quizzes")
+    @Operation(summary = "Get a list of all of the quizzes", description = "Returns a list of all the quizzes")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of quizzes retrieved succesully"),
             @ApiResponse(responseCode = "400", description = "List of quizzes does not exist")
@@ -56,7 +56,7 @@ public class QuizRestController {
     }
 
 
-    @Operation(summary = "Get all published quizzes", description = "Returns a list of all the quizzes with published status")
+    @Operation(summary = "Get a list of all of the published quizzes", description = "Returns a list of all the quizzes with published status")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of published quizzes with the provided published status retrieved succesully"),
             @ApiResponse(responseCode = "400", description = "List of published quizzes with the provided published status does not exist")
@@ -67,7 +67,7 @@ public class QuizRestController {
     }
 
 
-    @Operation(summary = "Get all the quizzes of a certain category", description = "Returns a list of certain categories' quizzes with the provided category id")
+    @Operation(summary = "Get all the quizzes of a category by category id", description = "Returns a list of a categories' quizzes with the provided category id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of quizzes with the provided id retrieved succesully"),
             @ApiResponse(responseCode = "400", description = "List of quizzes with the provided id does not exist")

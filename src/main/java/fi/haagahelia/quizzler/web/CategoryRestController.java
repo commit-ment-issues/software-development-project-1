@@ -21,14 +21,14 @@ import fi.haagahelia.quizzler.domain.Category;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
-@Tag(name = "Categories", description = "Operations for retrieving and manipulating categories")
+@Tag(name = "Categories", description = "Operations for retrieving categories")
 public class CategoryRestController {
     @Autowired
     private CategoryRepository categoryRepository;
 
     @Operation(
         summary = "Get a category by id", 
-        description = "Returns the category with the provided id"
+        description = "Returns a category with the provided id"
     )
     @ApiResponses(value={
         @ApiResponse(responseCode = "200", description = "Category with the provided id retrieved succesully"),
@@ -42,7 +42,7 @@ public class CategoryRestController {
     }
 
     @Operation(
-        summary = "Get a list of all categories", 
+        summary = "Get a list of all of the categories", 
         description = "Returns a list of all the categories"
     )
     @ApiResponses(value={
