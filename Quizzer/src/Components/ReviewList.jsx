@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getQuizById } from '../utils/quizapi';
 import { getReviewsByQuizId } from '../utils/reviewapi';
 
@@ -8,7 +8,6 @@ function ReviewList() {
   const [quiz, setQuiz] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchQuizAndReviews = async () => {

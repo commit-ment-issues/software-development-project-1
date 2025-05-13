@@ -10,7 +10,7 @@ ModuleRegistry.registerModules([AllCommunityModule])
 function QuizList(){
 
     const [quizzes, setQuizzes] = useState([]);
-    const [colDefs, setColDefs] = useState([
+    const [colDefs, _setColDefs] = useState([
         { field: "name", headerName: "Title", 
             cellRenderer: (params) => (
                 <Link to={`quiz/${params.data.quizId}/questions`} style={{ color: "#57B9FF" }}>
