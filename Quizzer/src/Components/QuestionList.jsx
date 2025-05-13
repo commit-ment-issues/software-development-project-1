@@ -1,21 +1,16 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getQuizById, getQuestionsByQuizId, updateResults } from "../utils/quizapi";
-import { CardActionArea, RadioGroup, Typography } from "@mui/material";
+import { CardActionArea, RadioGroup, Snackbar, Typography } from "@mui/material";
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Item from '@mui/material/Grid';
-import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from "@mui/material/FormLabel";
 import Button from '@mui/material/Button';
 import Radio from "@mui/material/Radio";
 import Card from "@mui/material/Card";
 import CardContent from '@mui/material/CardContent';
 
-
+//TODO add snackbar for answer feedback
 
 function QuestionList() {
   const quizId = useParams().quizId;
@@ -27,6 +22,13 @@ function QuestionList() {
     answerId: null,
     answerStatus: null
   });
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("That is not correct, try again");
+  
+  
+  const handleClose = () => {
+    setOpen(false);
+  }
 
   const handleChange = (e, questionId) => {
     const answerId = parseInt(e.target.value);
@@ -44,35 +46,42 @@ function QuestionList() {
   };
 
   const handleSubmit = (questionId) => {
-    if (!selectedAnswers.answerId) {
-        console.error("No answer selected");
-        return;
-    }
+      if (!selectedAnswers.answerId) {
+          console.error("No answer selected");
+          return;
+      }
 
-    updateResults(questionId, {
-        questionId: questionId,
-        answers: [{
-            id: selectedAnswers.answerId,
-            status: selectedAnswers.answerStatus
-        }]
-    })
-    .then(response => {
-        console.log("Answer submitted successfully", response);
-        setSelectedAnswers({
-            questionId: null,
-            answerId: null,
-            answerStatus: null
-        });
-        return getQuestionsByQuizId(quizId);
-    })
-    .then(updatedQuestions => {
-        setQuestions(updatedQuestions);
-    })
-    .catch(error => {
-      console.error("Error submitting answer:", error);
-      setError("Failed to submit answer. Please try again.");
-  });
-};
+      if(selectedAnswers.answerStatus != 0){
+        setMessage("That is correct, good job!")
+      }
+
+      setOpen(true);
+      updateResults(questionId, {
+          questionId: questionId,
+          answers: [{
+              id: selectedAnswers.answerId,
+              status: selectedAnswers.answerStatus
+          }]
+      })
+      .then(response => {
+          console.log("Answer submitted successfully", response);
+          setSelectedAnswers({
+              questionId: null,
+              answerId: null,
+              answerStatus: null
+          });
+          return getQuestionsByQuizId(quizId);
+      })
+      .then(updatedQuestions => {
+          setQuestions(updatedQuestions);
+      })
+      .catch(error => {
+        console.error("Error submitting answer:", error);
+        setError("Failed to submit answer. Please try again.");
+    });
+  };
+
+
   
   useEffect(() => {
     if (!quizId) {
@@ -147,6 +156,12 @@ function QuestionList() {
             <Typography variant="body1">No questions found.</Typography>
           )}
       </Box>
+      <Snackbar 
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message={message}
+      />
     </div>
   );
 }

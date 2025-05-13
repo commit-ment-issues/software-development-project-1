@@ -44,4 +44,11 @@ public class AnswerRestController {
         return answers;
     }
 
+    @GetMapping("/question/answer/{id}")
+    public Answers getAnswerById(@PathVariable Long id){
+        return answerRepository.findById(id).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, 
+                "Answer with the provided id " + id + " does not exist"));
+    }
+
 }

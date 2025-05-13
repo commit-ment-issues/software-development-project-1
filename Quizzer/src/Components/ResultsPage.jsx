@@ -19,11 +19,17 @@ function ResultsPage() {
             valueGetter: (params) => {
                 const totalAnswers = params.data.totalAnswers;
                 const correctAnswers = params.data.correctAnswers;
-                return totalAnswers > 0 ? ((correctAnswers / totalAnswers) * 100).toFixed(2) + "%" : "0%";
+                return totalAnswers > 0 ? ((correctAnswers / totalAnswers) * 100).toFixed(0) + "%" : "0%";
             }
         },
         { field: "correctAnswers", headerName: "Correct Answers" },
-        { field: "wrongAnswers", headerName: "Wrong Answers" }
+        { field: "wrongAnswers", headerName: "Wrong Answers",
+            valueGetter: (params) => {
+              const totalAnswers = params.data.totalAnswers;
+              const correctAnswers = params.data.correctAnswers;
+              return totalAnswers > 0 ? ((totalAnswers - correctAnswers)) : 0;
+            }
+         }
     ])
     const [error, setError] = useState(null);
 
