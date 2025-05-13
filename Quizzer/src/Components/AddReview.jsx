@@ -27,10 +27,9 @@ export default function AddReview() {
         reviewText: "",
     });
 
-    const [open, setOpen] = useState(false);
+    const [_open, setOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-    const handleClickOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const handleSnackbarClose = () => setSnackbarOpen(false);
 

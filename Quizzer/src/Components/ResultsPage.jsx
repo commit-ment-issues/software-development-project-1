@@ -11,7 +11,7 @@ function ResultsPage() {
     const [quiz, setQuiz] = useState([]);
 
     const [questions, setQuestions] = useState([])
-    const [colDefs, setColDefs] = useState([
+    const [colDefs, _setColDefs] = useState([
         { field: "questionText", headerName: "Name" },
         { field: "difficulty", headerName: "Difficulty" },
         { field: "totalAnswers", headerName: "Total Answers" },
