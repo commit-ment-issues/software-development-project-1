@@ -38,7 +38,7 @@ public class ReviewRestController {
         @Autowired
         private QuizRepository quizRepository;
 
-        @Operation(summary = "Get a list of all the reviews", description = "Returns a list of reviews")
+        @Operation(summary = "Get a list of all of the reviews", description = "Returns a list of reviews")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "List of reviews retrieved succesully"),
                         @ApiResponse(responseCode = "400", description = "Reviews do not exist")
@@ -55,7 +55,7 @@ public class ReviewRestController {
         }
 
 
-        @Operation(summary = "Get a list of reviews by QuizId", description = "Returns a list of reviews with QuizId")
+        @Operation(summary = "Get a list of reviews by quiz id", description = "Returns a list of reviews with quiz id")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "List of reviews retrieved succesully with the provided id"),
                         @ApiResponse(responseCode = "400", description = "Reviews do not exist with the provided id")
@@ -70,7 +70,7 @@ public class ReviewRestController {
         }
 
 
-        @Operation(summary = "Add a review to a quiz with quizId", description = "Adds a review to a quiz with quizId")
+        @Operation(summary = "Add a review to a quiz with quiz id", description = "Adds a review to a quiz with quiz id")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Review added succesfully to a quiz with the provided id"),
                         @ApiResponse(responseCode = "400", description = "Reviews coulnd't be added to a quiz with the provided id")

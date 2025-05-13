@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
-@Tag(name= "Answers", description = "Operations for retrieving and manipulating answers")
+@Tag(name= "Answers", description = "Operations for retrieving answers")
 public class AnswerRestController {
     @Autowired
     private AnswersRepository answerRepository;
@@ -44,6 +44,14 @@ public class AnswerRestController {
         return answers;
     }
 
+    @Operation(
+        summary = "Get answer by id", 
+        description = "Returns an answer with the provided id"
+    )
+    @ApiResponses(value={
+        @ApiResponse(responseCode = "200", description = "Answer with the provided id retrieved succesully"),
+        @ApiResponse(responseCode = "400", description = "Answer with the provided id do not exist")
+    })
     @GetMapping("/question/answer/{id}")
     public Answers getAnswerById(@PathVariable Long id){
         return answerRepository.findById(id).orElseThrow(
