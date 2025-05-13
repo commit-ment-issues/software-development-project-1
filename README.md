@@ -1,10 +1,33 @@
 # Quizzler
 
-Quizzer is a web application designed for teachers to create and manage quizzes and for students to take quizzes and receive feedback. The project follows Scrum methodology and is developed in three sprints.
+Quizzer is a web application designed for teachers to create and manage quizzes and for students to take quizzes and receive feedback. The project follows Scrum methodology and is developed in three sprints. The project is built with Java Spring Boot (backend) and JavaScript (frontend).
 
 https://software-development-project-1-git-quizzer.2.rahtiapp.fi 
 
-## Team Members
+## 🧩 Features
+### For Teachers:
+
+- Create and manage quizzes with questions
+- Assign quizzes to specific classes
+- View quiz results and analytics for student performance
+
+### For Students:
+
+- Take assigned quizzes with real-time feedback
+- View results
+- Review quizzes
+
+
+## 🛠️ Tech Stack
+
+| Layer     | Technology       |
+|-----------|------------------|
+| Backend   | Java, Spring Boot|
+| Build Tool| Maven            |
+| Frontend  | HTML, CSS, JavaScript|
+| Database  | H2 / PostgreSQL |
+
+## Contributors
 
 - [Markus Mäntylä](https://github.com/MarkusMant)
 - [Robbie Winter](https://github.com/robbiewinter)
@@ -25,30 +48,54 @@ https://edu.flinga.fi/s/ECXCXME
 
 This section provides instructions on how to get the backend application running locally via the command-line interface.
 
+## 🚀 Getting Started
 ### Requirement
 
-- Java 17 must be installed
+- Java 17+
+- Maven 3.6+
 
-### Getting Started
+### Backend
 
 1. **Clone the repository**
-   
+   ```bash
    git clone (https://github.com/commit-ment-issues/software-development-project-1.git)
+
+   ```bash
    git clone (git@github.com:commit-ment-issues/software-development-project-1.git)
 
+    ```bash
    cd 'repository-directory'
 
 2. **Build the project**
-
+    ```bash
     ./mvnw clean install
 
 3. **Start application**
-
+    ```bash
     ./mvnw spring-boot:run
 
 4. **Once the application has started**
 
     visit http://localhost:8080/
+
+### Frontend
+
+1. **Navigate to the frontend folder**
+    
+    ```bash
+    cd Quizzer
+2. **Install dependencies**
+    
+    ```bash
+    npm install
+3. **Start the frontend application**
+    
+    ```bash
+    npm run dev
+4. **Access the frontend**
+    
+    Open your browser and visit the URL displayed in the terminal (e.g. http://localhost:5173/).
+
 
 ## Data model
 
@@ -60,7 +107,15 @@ erDiagram
 
     ANSWERS o{--|| QUESTION : N1
 
+    REVIEW o{--|| QUIZ
 
+    REVIEW {
+        long reviewId
+        string reviewerNickname
+        int rating
+        string reviewText
+        localDate date
+    }
     USER {
         int id
         string name
@@ -76,17 +131,19 @@ erDiagram
         LocalDate creationDate
     }
     QUESTION {
-        int id
+        long questionId
         string questionText
         string difficulty
+        int totalAnswers
+        int correctAnswers
     }
     ANSWERS {
-        int id
+        long id
         string text
         int status
     }
     CATEGORY {
-        int id
+        long categoryid
         string name
         string description
     }
@@ -115,6 +172,7 @@ erDiagram
 - Relationships:
     - One-to-Many relationship with QUESTION
     - Many-to-One relationship with CATEGORY
+    - One-to-Many relationship with REVIEW
 
 #### QUESTION
 - Represents a question in a quiz
@@ -122,6 +180,8 @@ erDiagram
     - id: Unique identifier for the question
     - questionText: The text of the question
     - difficulty: Difficulty level for the question
+    - totalAnswers: Number of total answers of the quiz
+    - correctAnswers: Number of correct answers of the quiz
 - Relationships:
     - Many-to-One with QUIZ
     - One-to-Many with ANSWERS
@@ -144,23 +204,23 @@ erDiagram
     - description: Description of the category
 - Relationships: One-to-Many with QUIZ
 
-### Frontend
+### REVIEW
 
-1. **Navigate to the frontend folder**
-    
+- Represents the reviews of a quiz
+- Attributes:
+    - id: Unique identifier for the review
+    - reviewerNickname: Nickname for the reviewer
+    - rating: Rating given to the quiz
+    - text: Review text given to the quiz
+    - date: Creation date for the review
+- Relationships: Many-to-One with QUIZ
+
+
+## How to run the tests on the command-line
+
+ **Run the backend tests:**
     ```bash
-    cd Quizzer
-2. **Install dependencies**
-    
-    ```bash
-    npm install
-3. **Start the frontend application**
-    
-    ```bash
-    npm run dev
-4. **Access the frontend**
-    
-    Open your browser and visit the URL displayed in the terminal (e.g. http://localhost:5173/).
+    ./mvnw test
 
-
-
+## License
+This project is licensed under the terms of the [MIT license.](./LICENSE.txt)
