@@ -1,6 +1,7 @@
 package fi.haagahelia.quizzler.web;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -115,6 +116,21 @@ public class ReviewRestController {
 
                 Review savedReview = reviewRepository.save(existingReview);
                 return ResponseEntity.ok(savedReview);
+        }
+
+        @Operation(summary = "Delete a review by id", description = "Deletes a review with the provided id")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Review deleted successfully with the provided id"),
+                        @ApiResponse(responseCode = "404", description = "Review not found with the provided id")
+        })
+        @DeleteMapping("/reviews/{id}")
+        public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
+                Review review = reviewRepository.findById(id)
+                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                                "Review with the provided id " + id + " does not exist"));
+
+                reviewRepository.delete(review);
+                return ResponseEntity.ok().build();
         }
 
 }

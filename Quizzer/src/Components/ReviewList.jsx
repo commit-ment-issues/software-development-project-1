@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { getQuizById } from '../utils/quizapi';
 import { getReviewsByQuizId } from '../utils/reviewapi';
 
@@ -8,6 +8,7 @@ function ReviewList() {
   const [quiz, setQuiz] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchQuizAndReviews = async () => {
@@ -35,6 +36,20 @@ function ReviewList() {
     fetchQuizAndReviews();
   }, [quizId]);
 
+  const handleDeleteReview = async (reviewId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this review?");
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/reviews/${reviewId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Failed to delete review');
+      setReviews(reviews.filter((review) => review.reviewId !== reviewId));
+    } catch (error) {
+      console.error('Error deleting review:', error);
+    }
+  };
 
   if (loading) return <div>Loading...</div>;
 
@@ -61,6 +76,12 @@ function ReviewList() {
               to={`/editreview/${review.reviewId}`} style={{ color: '#57B9FF' }}>
               Edit
             </Link>
+            <button
+              onClick={() => handleDeleteReview(review.reviewId)}
+              style={{ color: 'red', marginLeft: '10px', background: 'none', border: 'none', cursor: 'pointer' }}
+            >
+              Delete
+            </button>
           </div>
         ))}
       </div>
