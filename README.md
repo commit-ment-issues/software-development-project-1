@@ -202,7 +202,7 @@ erDiagram
     - description: Description of the category
 - Relationships: One-to-Many with QUIZ
 
-### REVIEW
+#### REVIEW
 
 - Represents the reviews of a quiz
 - Attributes:
@@ -218,8 +218,8 @@ erDiagram
 
  **Run the backend tests:**
 
-    ```bash
+   ```bash
     ./mvnw test
-    
+
 ## License
 This project is licensed under the terms of the [MIT license.](./LICENSE.txt)
