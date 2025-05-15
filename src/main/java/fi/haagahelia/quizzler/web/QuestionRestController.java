@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
+import java.util.Optional;
 
 import fi.haagahelia.quizzler.domain.AnswerDTO;
 import fi.haagahelia.quizzler.domain.Question;
@@ -49,7 +50,6 @@ public class QuestionRestController {
                 .toList();
     }
 
-
     @Operation(summary = "Get a list of all of the questions", description = "Retuns a list of questions")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of questions retrieved succesully"),
@@ -61,7 +61,6 @@ public class QuestionRestController {
 
         return questions;
     }
-    
 
     @Operation(summary = "Update answer statistics for a question by id", description = "Updates the number of correct and total answers for a question using the provided QuestionResultsDTO")
     @ApiResponses(value = {
@@ -81,9 +80,11 @@ public class QuestionRestController {
                     .findFirst()
                     .ifPresent(answer -> {
                         if (answerDTO.getStatus() == 1) {
-                            updateQuestion.setCorrectAnswers(updateQuestion.getCorrectAnswers() + 1);
+                            updateQuestion.setCorrectAnswers(
+                                    updateQuestion.getCorrectAnswers() + 1);
                         }
-                        updateQuestion.setTotalAnswers(updateQuestion.getTotalAnswers() + 1);
+                        updateQuestion
+                                .setTotalAnswers(updateQuestion.getTotalAnswers() + 1);
                     });
         }
 

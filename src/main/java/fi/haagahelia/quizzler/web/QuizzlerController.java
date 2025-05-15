@@ -158,6 +158,9 @@ public class QuizzlerController {
     public String saveAnswer(@PathVariable("id") Long questionId, @ModelAttribute Answers answer) {
         Question question = questionRepository.findById(questionId).orElse(null);
 
+        if (answer.getStatus() == null) {
+            answer.setStatus(0);
+        }
         answer.setId(null);
         answer.setQuestion(question);
         answersRepository.save(answer);
@@ -212,8 +215,7 @@ public class QuizzlerController {
         model.addAttribute("quiz", quiz);
         model.addAttribute("questions", quiz.getQuestions());
 
-        return "results"; //results.html
+        return "results"; // results.html
     }
-    
 
 }
