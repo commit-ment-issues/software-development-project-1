@@ -24,10 +24,9 @@ function CategoryPage() {
     { field: "courseCode", headerName: "Course" },
     { field: "creationDate", headerName: "Added on" },
     {
-      headerName: "",
       cellRenderer: (params) => (
         <Link
-          to={`quiz/${params.data.quizId}/results`}
+          to={`/quiz/${params.data.quizId}/results`}
           style={{ color: "#57B9FF" }}>
           See Results
         </Link>

@@ -22,7 +22,7 @@ function QuestionList() {
     answerStatus: null
   });
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("That is not correct, try again");
+  const [message, setMessage] = useState("");
   
   
   const handleClose = () => {
@@ -42,6 +42,7 @@ function QuestionList() {
         answerStatus: answer.status
       });
     }
+    console.log(selectedAnswers)
   };
 
   const handleSubmit = (questionId) => {
@@ -50,8 +51,10 @@ function QuestionList() {
           return;
       }
 
-      if(selectedAnswers.answerStatus != 0){
+      if(selectedAnswers.answerStatus == 1){
         setMessage("That is correct, good job!")
+      }else{
+        setMessage("That is not correct, try again")
       }
 
       setOpen(true);

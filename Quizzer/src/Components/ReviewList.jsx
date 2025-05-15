@@ -4,6 +4,7 @@ import { getQuizById } from '../utils/quizapi';
 import { getReviewsByQuizId } from '../utils/reviewapi';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 
+
 function ReviewList() {
   const { quizId } = useParams();
   const [quiz, setQuiz] = useState(null);
@@ -11,6 +12,7 @@ function ReviewList() {
   const [loading, setLoading] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const [reviewToDelete, setReviewToDelete] = useState(null);
+  const baseurl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchQuizAndReviews = async () => {
@@ -40,7 +42,7 @@ function ReviewList() {
 
   const handleDeleteReview = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/reviews/${reviewToDelete}`, {
+      const response = await fetch(`${baseurl}/reviews/${reviewToDelete}`, {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Failed to delete review');
