@@ -29,7 +29,7 @@
                     <td><a th:href="@{/quiz/{id}/questions(id=${quiz.quizId})}" th:text="${quiz.name}"></a></td>
                     <td th:text="${quiz.description}"></td>
                     <td th:text="${quiz.courseCode}"></td>
-                    <td th:text="${quiz.category.name}" ></td>
+                    <td th:text="${quiz.category?.name}" ></td>
                     <td>
                         <span th:if="${quiz.publishedStatus == 1}" class="btn btn-primary btn-sm" >Published</span>
                         <span th:if="${quiz.publishedStatus != 1}" class="btn btn-secondary btn-sm" >Not published</span>

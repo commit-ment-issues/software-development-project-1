@@ -122,8 +122,6 @@ public class AnswerRestControllerTest {
         assertEquals(0, answers.size());
     }
 
-    // TODO: Check validation for saving answers to published and unpublished
-    // quizzes
     @Test
     public void createAnswerDoesNotSaveAnswerForNonPublishedQuiz() throws Exception {
         Quiz quiz1 = new Quiz("Test Quiz 1",
