@@ -75,7 +75,8 @@ function QuestionList() {
           return getQuestionsByQuizId(quizId);
       })
       .then(updatedQuestions => {
-          setQuestions(updatedQuestions);
+          const sortedQuestions = [...updatedQuestions].sort((a, b) => a.questionId - b.questionId);
+          setQuestions(sortedQuestions);
       })
       .catch(error => {
         console.error("Error submitting answer:", error);
@@ -91,7 +92,8 @@ function QuestionList() {
     getQuizById(quizId)
       .then(data => {
         setQuiz(data);
-        setQuestions(data.questions);
+        const sortedQuestions = [...data.questions].sort((a, b) => a.questionId - b.questionId);
+        setQuestions(sortedQuestions);
       })
       .catch((err) => setError(err.message));
   }
