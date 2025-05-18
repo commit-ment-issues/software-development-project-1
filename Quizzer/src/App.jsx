@@ -26,7 +26,7 @@ function App() {
   return (
     <HashRouter>
       <Container maxwidth="xl">
-        <Box sx={{ color: 'primary.contrastText', p: 2 }}>
+        <Box sx={{ background: 'lightblue', color: 'primary.contrastText', p: 2 }}>
           <Typography variant="h4" color='black' paddingTop={1} align='center'>Quizzer</Typography>
 
           <Tabs value={value} onChange={handleChange} aria-label='navigation tabs' centered>

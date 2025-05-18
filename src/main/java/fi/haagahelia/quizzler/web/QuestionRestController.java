@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
-import java.util.Optional;
 
 import fi.haagahelia.quizzler.domain.AnswerDTO;
 import fi.haagahelia.quizzler.domain.Question;
@@ -28,70 +27,70 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @CrossOrigin(origins = "*")
 @Tag(name = "Questions", description = "Operations for retrieving and manipulating questions")
 public class QuestionRestController {
-    @Autowired
-    private QuestionRepository questionRepository;
+        @Autowired
+        private QuestionRepository questionRepository;
 
-    @Operation(summary = "Get a list of questions by quiz id", description = "Returns a list of questions with the provided quiz id")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "List of questions with the provided id retrieved succesully"),
-            @ApiResponse(responseCode = "400", description = "List of questions with the provided id does not exist")
-    })
-    @GetMapping("/quiz/{id}/questions")
-    public List<QuestionResultsDTO> getQuestionsByQuizId(@PathVariable Long id) {
-        List<Question> questions = questionRepository.findByQuiz_QuizId(id);
+        @Operation(summary = "Get a list of questions by quiz id", description = "Returns a list of questions with the provided quiz id")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "List of questions with the provided id retrieved succesully"),
+                        @ApiResponse(responseCode = "400", description = "List of questions with the provided id does not exist")
+        })
+        @GetMapping("/quiz/{id}/questions")
+        public List<QuestionResultsDTO> getQuestionsByQuizId(@PathVariable Long id) {
+                List<Question> questions = questionRepository.findByQuiz_QuizId(id);
 
-        if (questions.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Quiz with the provided id " + id + " does not exist");
+                if (questions.isEmpty()) {
+                        throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                        "Quiz with the provided id " + id + " does not exist");
+                }
+
+                return questions.stream()
+                                .map(QuestionResultsDTO::new)
+                                .toList();
         }
 
-        return questions.stream()
-                .map(QuestionResultsDTO::new)
-                .toList();
-    }
+        @Operation(summary = "Get a list of all of the questions", description = "Retuns a list of questions")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "List of questions retrieved succesully"),
+                        @ApiResponse(responseCode = "400", description = "List of questions does not exist")
+        })
+        @GetMapping("/quiz/questions")
+        public List<Question> getAllQuestions() {
+                List<Question> questions = questionRepository.findAll();
 
-    @Operation(summary = "Get a list of all of the questions", description = "Retuns a list of questions")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "List of questions retrieved succesully"),
-            @ApiResponse(responseCode = "400", description = "List of questions does not exist")
-    })
-    @GetMapping("/quiz/questions")
-    public List<Question> getAllQuestions() {
-        List<Question> questions = questionRepository.findAll();
-
-        return questions;
-    }
-
-    @Operation(summary = "Update answer statistics for a question by id", description = "Updates the number of correct and total answers for a question using the provided QuestionResultsDTO")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Answer statistics updated successfully"),
-            @ApiResponse(responseCode = "400", description = "Question not found with the provided id")
-    })
-    @PutMapping("/question/updateanswer/{id}")
-    public ResponseEntity<QuestionResultsDTO> updateQuestion(@PathVariable long id,
-            @RequestBody QuestionResultsDTO updateResultsDTO) {
-        Question updateQuestion = questionRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Question with id " + id + "not found"));
-
-        for (AnswerDTO answerDTO : updateResultsDTO.getAnswers()) {
-            updateQuestion.getAnswers().stream()
-                    .filter(answer -> answer.getId().equals(answerDTO.getId()))
-                    .findFirst()
-                    .ifPresent(answer -> {
-                        if (answerDTO.getStatus() == 1) {
-                            updateQuestion.setCorrectAnswers(
-                                    updateQuestion.getCorrectAnswers() + 1);
-                        }
-                        updateQuestion
-                                .setTotalAnswers(updateQuestion.getTotalAnswers() + 1);
-                    });
+                return questions;
         }
 
-        Question savedQuestion = questionRepository.save(updateQuestion);
+        @Operation(summary = "Update answer statistics for a question by id", description = "Updates the number of correct and total answers for a question using the provided QuestionResultsDTO")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Answer statistics updated successfully"),
+                        @ApiResponse(responseCode = "400", description = "Question not found with the provided id")
+        })
+        @PutMapping("/question/updateanswer/{id}")
+        public ResponseEntity<QuestionResultsDTO> updateQuestion(@PathVariable long id,
+                        @RequestBody QuestionResultsDTO updateResultsDTO) {
+                Question updateQuestion = questionRepository.findById(id)
+                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                                "Question with id " + id + "not found"));
 
-        QuestionResultsDTO responseDTO = new QuestionResultsDTO(savedQuestion);
+                for (AnswerDTO answerDTO : updateResultsDTO.getAnswers()) {
+                        updateQuestion.getAnswers().stream()
+                                        .filter(answer -> answer.getId().equals(answerDTO.getId()))
+                                        .findFirst()
+                                        .ifPresent(answer -> {
+                                                if (answerDTO.getStatus() == 1) {
+                                                        updateQuestion.setCorrectAnswers(
+                                                                        updateQuestion.getCorrectAnswers() + 1);
+                                                }
+                                                updateQuestion
+                                                                .setTotalAnswers(updateQuestion.getTotalAnswers() + 1);
+                                        });
+                }
 
-        return ResponseEntity.ok(responseDTO);
-    }
+                Question savedQuestion = questionRepository.save(updateQuestion);
+
+                QuestionResultsDTO responseDTO = new QuestionResultsDTO(savedQuestion);
+
+                return ResponseEntity.ok(responseDTO);
+        }
 }

@@ -54,7 +54,6 @@ public class ReviewRestController {
                 return reviews;
         }
 
-
         @Operation(summary = "Get a list of reviews by quiz id", description = "Returns a list of reviews with quiz id")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "List of reviews retrieved succesully with the provided id"),
@@ -62,13 +61,12 @@ public class ReviewRestController {
         })
         @GetMapping("/reviews/quiz/{id}")
         public List<Review> getReviewsByQuizId(@PathVariable Long id) {
-                Quiz quiz = quizRepository.findById(id)
+                quizRepository.findById(id)
                                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                                                 "Quiz with ID " + id + " not found"));
 
                 return reviewRepository.findByQuiz_QuizId(id);
         }
-
 
         @Operation(summary = "Add a review to a quiz with quiz id", description = "Adds a review to a quiz with quiz id")
         @ApiResponses(value = {
@@ -85,7 +83,6 @@ public class ReviewRestController {
                 return reviewRepository.save(review);
         }
 
-
         @Operation(summary = "Get a review by id", description = "Returns a review with id")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Reviews retrieved succesully with the provided id"),
@@ -98,7 +95,6 @@ public class ReviewRestController {
                                                 "Review with the provided id " + id + " does not exist"));
                 return ResponseEntity.ok(review);
         }
-
 
         @Operation(summary = "Updates a review with id", description = "Updates review with id")
         @ApiResponses(value = {

@@ -83,9 +83,7 @@ function QuestionList() {
     });
   };
 
-
-  
-  useEffect(() => {
+  const handleFetch = (quizId) => {
     if (!quizId) {
       setError("Quiz ID is missing from URL.");
       return;
@@ -93,13 +91,13 @@ function QuestionList() {
     getQuizById(quizId)
       .then(data => {
         setQuiz(data);
-        return getQuestionsByQuizId(quizId);
-      })
-      .then(questions => {
-        setQuestions(questions);
-        console.log(questions);
+        setQuestions(data.questions);
       })
       .catch((err) => setError(err.message));
+  }
+  
+  useEffect(() => {
+    handleFetch(quizId);
   }, [quizId]);
 
   if (error) return <div>Error: {error}</div>;
@@ -108,12 +106,12 @@ function QuestionList() {
   return (
     <div className="ag-theme-material" style={{ width: "100%", height: 400 }}>
 
-      <h1>{quiz.name}</h1>
-      <h2>{quiz.description}</h2>
+      <Typography variant='h4'>{quiz.name}</Typography>
+      <Typography variant='h6'>{quiz.description}</Typography>
       <h4>Questions:</h4>
       <Box sx={{ width: "100%", height: 400 }}>
         {questions.length > 0 ? (questions.map((q, index) => (
-            <Card sx={{ maxWidth: 800, mb: 2 }} key={q.id || q.questionId}>
+            <Card sx={{ background: 'lightgray', maxWidth: '100%', mb: 2 }} key={q.id || q.questionId}>
               <CardActionArea>
                 <CardContent>
                   <Typography variant="h5">
@@ -155,10 +153,10 @@ function QuestionList() {
               </CardContent>
             </Card>
           ))) : (
-            <Typography variant="body1">No questions found.</Typography>
+            <Typography variant="body1">Loading...</Typography>
           )}
       </Box>
-      <Snackbar 
+      <Snackbar
         open={open}
         autoHideDuration={2000}
         onClose={handleClose}

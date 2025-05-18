@@ -11,12 +11,13 @@ function CategoryList() {
 
     const [categories, setCategories] = useState([]);
     const [colDefs, _setColDefs] = useState([
-        { field: "name", headerName: "Title", cellRenderer: (params) => (
+        { field: "name", headerName: "Title", flex: 1, sortable: true, filter: true,
+            cellRenderer: (params) => (
             <Link to={`/categories/${params.data.categoryid}`} style={{ color: "#57B9FF" }}>
               {params.value}
             </Link>
           )},
-        { field: "description", headerName: "Description", flex: 2 }
+        { field: "description", headerName: "Description", flex: 2}
     ]);
 
 
@@ -35,6 +36,9 @@ function CategoryList() {
             <AgGridReact
                 rowData={categories}
                 columnDefs={colDefs}
+                pagination={true}
+                paginationAutoPageSize={true}
+                suppressCellFocus={true}
             />
         </div>
     )

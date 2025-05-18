@@ -11,16 +11,17 @@ function QuizList(){
 
     const [quizzes, setQuizzes] = useState([]);
     const [colDefs, _setColDefs] = useState([
-        { field: "name", headerName: "Title", 
+        { field: "name", headerName: "Title", flex: 1, sortable: true, filter: true,
             cellRenderer: (params) => (
                 <Link to={`quiz/${params.data.quizId}/questions`} style={{ color: "#57B9FF" }}>
                     {params.value}
                 </Link>
           )},
-        { field: "description", headerName: "Description" },
-        { field: "courseCode", headerName: "Course" },
-        { field: "category", headerName: "Category", cellRenderer: (params) => params.value?.name },
-        { field: "creationDate", headerName: "Added on"},
+        { field: "description", headerName: "Description", flex: 1, sortable: true, filter: true },
+        { field: "courseCode", headerName: "Course", flex: 1, sortable: true, filter: true },
+        { field: "category", headerName: "Category", flex: 1, sortable: true, filter: true,
+            cellRenderer: (params) => params.value?.name },
+        { field: "creationDate", headerName: "Added on", flex: 1, sortable: true, filter: true },
         { cellRenderer: (params) => (
             <Link to={`quiz/${params.data.quizId}/results`} style={{ color: "#57B9FF" }}>
                 See results
@@ -50,6 +51,9 @@ function QuizList(){
             <AgGridReact
                 rowData={quizzes}
                 columnDefs={colDefs}
+                pagination={true}
+                paginationAutoPageSize={true}
+                suppressCellFocus={true}
                 domLayout='autoHeight'
             />
         </div>

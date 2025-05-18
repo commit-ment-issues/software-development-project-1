@@ -28,122 +28,122 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class AnswerRestControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @Autowired
-    private AnswersRepository answersRepository;
+        @Autowired
+        private AnswersRepository answersRepository;
 
-    @Autowired
-    private QuestionRepository questionRepository;
+        @Autowired
+        private QuestionRepository questionRepository;
 
-    @Autowired
-    private QuizRepository quizRepository;
+        @Autowired
+        private QuizRepository quizRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+        @Autowired
+        private CategoryRepository categoryRepository;
 
-    private Question testQuestion;
-    private Category testCategory;
-    private Answers testAnswer;
+        private Question testQuestion;
+        private Category testCategory;
+        private Answers testAnswer;
 
-    @BeforeEach
-    public void setup() {
-        answersRepository.deleteAll();
-        quizRepository.deleteAll();
-        testQuestion = questionRepository.save(
-                new Question("Test question",
-                        "Test Difficulty",
-                        0,
-                        0));
-        testCategory = categoryRepository.save(new Category("Test Category", null));
-    }
-
-    @Test
-    public void createAnswerSavesAnswerForPublishedQuiz() throws Exception {
-
-        Quiz quiz1 = new Quiz("Test Quiz 1",
-                "Test Description",
-                "Test Code",
-                1,
-                LocalDate.now(),
-                testCategory);
-        testAnswer = answersRepository.save(new Answers("Test Question", 1));
-        quizRepository.save(quiz1);
-        testQuestion.setQuiz(quiz1);
-        testAnswer.setQuestion(testQuestion);
-
-        this.mockMvc.perform(get("/api/question/answer/" + testAnswer.getId())
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.text").value("Test Question"));
-
-        List<Answers> answers = answersRepository.findAll();
-        assertEquals(1, answers.size());
-        assertEquals(testAnswer.getId(), answers.get(0).getId());
-    }
-
-    @Test
-    public void createAnswerDoesNotSaveAnswerWithoutAnswerOption() throws Exception {
-
-        Quiz quiz1 = new Quiz("Test Quiz 1",
-                "Test Description",
-                "Test Code",
-                1,
-                LocalDate.now(),
-                testCategory);
-        quizRepository.save(quiz1);
-        testQuestion.setQuiz(quiz1);
-
-        this.mockMvc.perform(get("/api/question/answer/"))
-                .andExpect(status().isNotFound());
-
-        List<Answers> answers = answersRepository.findAll();
-        assertEquals(0, answers.size());
-    }
-
-    @Test
-    public void createAnswerDoesNotSaveAnswerForNonExistingAnswerOption() throws Exception {
-
-        Quiz quiz1 = new Quiz("Test Quiz 1",
-                "Test Description",
-                "Test Code",
-                1,
-                LocalDate.now(),
-                testCategory);
-        quizRepository.save(quiz1);
-        testQuestion.setQuiz(quiz1);
-
-        this.mockMvc.perform(get("/api/question/answer/1"))
-                .andExpect(status().isNotFound());
-
-        List<Answers> answers = answersRepository.findAll();
-        assertEquals(0, answers.size());
-    }
-
-    @Test
-    public void createAnswerDoesNotSaveAnswerForNonPublishedQuiz() throws Exception {
-        Quiz quiz1 = new Quiz("Test Quiz 1",
-                "Test Description",
-                "Test Code",
-                0,
-                LocalDate.now(),
-                testCategory);
-        quizRepository.save(quiz1);
-        testQuestion.setQuiz(quiz1);
-        testAnswer = answersRepository.save(new Answers("Test Question", 1));
-
-        if (quiz1.getPublishedStatus() == 0) {
-            return;
-        } else {
-            testAnswer.setQuestion(testQuestion);
+        @BeforeEach
+        public void setup() {
+                answersRepository.deleteAll();
+                quizRepository.deleteAll();
+                testQuestion = questionRepository.save(
+                                new Question("Test question",
+                                                "Test Difficulty",
+                                                0,
+                                                0));
+                testCategory = categoryRepository.save(new Category("Test Category", null));
         }
 
-        this.mockMvc.perform(get("/api/question/answer/"))
-                .andExpect(status().isBadRequest());
+        @Test
+        public void createAnswerSavesAnswerForPublishedQuiz() throws Exception {
 
-        List<Answers> answers = answersRepository.findAll();
-        assertEquals(0, answers.size());
-    }
+                Quiz quiz1 = new Quiz("Test Quiz 1",
+                                "Test Description",
+                                "Test Code",
+                                1,
+                                LocalDate.now(),
+                                testCategory);
+                testAnswer = answersRepository.save(new Answers("Test Question", 1));
+                quizRepository.save(quiz1);
+                testQuestion.setQuiz(quiz1);
+                testAnswer.setQuestion(testQuestion);
+
+                this.mockMvc.perform(get("/api/question/answer/" + testAnswer.getId())
+                                .accept(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isOk())
+                                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                                .andExpect(jsonPath("$.text").value("Test Question"));
+
+                List<Answers> answers = answersRepository.findAll();
+                assertEquals(1, answers.size());
+                assertEquals(testAnswer.getId(), answers.get(0).getId());
+        }
+
+        @Test
+        public void createAnswerDoesNotSaveAnswerWithoutAnswerOption() throws Exception {
+
+                Quiz quiz1 = new Quiz("Test Quiz 1",
+                                "Test Description",
+                                "Test Code",
+                                1,
+                                LocalDate.now(),
+                                testCategory);
+                quizRepository.save(quiz1);
+                testQuestion.setQuiz(quiz1);
+
+                this.mockMvc.perform(get("/api/question/answer/"))
+                                .andExpect(status().isNotFound());
+
+                List<Answers> answers = answersRepository.findAll();
+                assertEquals(0, answers.size());
+        }
+
+        @Test
+        public void createAnswerDoesNotSaveAnswerForNonExistingAnswerOption() throws Exception {
+
+                Quiz quiz1 = new Quiz("Test Quiz 1",
+                                "Test Description",
+                                "Test Code",
+                                1,
+                                LocalDate.now(),
+                                testCategory);
+                quizRepository.save(quiz1);
+                testQuestion.setQuiz(quiz1);
+
+                this.mockMvc.perform(get("/api/question/answer/1"))
+                                .andExpect(status().isNotFound());
+
+                List<Answers> answers = answersRepository.findAll();
+                assertEquals(0, answers.size());
+        }
+
+        @Test
+        public void createAnswerDoesNotSaveAnswerForNonPublishedQuiz() throws Exception {
+                Quiz quiz1 = new Quiz("Test Quiz 1",
+                                "Test Description",
+                                "Test Code",
+                                0,
+                                LocalDate.now(),
+                                testCategory);
+                quizRepository.save(quiz1);
+                testQuestion.setQuiz(quiz1);
+                testAnswer = answersRepository.save(new Answers("Test Question", 1));
+
+                if (quiz1.getPublishedStatus() == 0) {
+                        return;
+                } else {
+                        testAnswer.setQuestion(testQuestion);
+                }
+
+                this.mockMvc.perform(get("/api/question/answer/"))
+                                .andExpect(status().isBadRequest());
+
+                List<Answers> answers = answersRepository.findAll();
+                assertEquals(0, answers.size());
+        }
 }

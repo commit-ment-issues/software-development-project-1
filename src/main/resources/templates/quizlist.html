@@ -1,65 +1,96 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quizlist</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+      crossorigin="anonymous"
+    />
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div class="container text-center">
-        <h1>Quizzers</h1>
-        <table class="table">
-            <thead>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Course</th>
-                <th>Category</th>
-                <th>Published</th>
-                <th>Date</th>
-                <th></th>
-                <th></th>
-            </thead>
-            <tbody>
-                <tr th:each="quiz : ${quizzes}">
-                    <td><a th:href="@{/quiz/{id}/questions(id=${quiz.quizId})}" th:text="${quiz.name}"></a></td>
-                    <td th:text="${quiz.description}"></td>
-                    <td th:text="${quiz.courseCode}"></td>
-                    <td th:text="${quiz.category?.name}" ></td>
-                    <td>
-                        <span th:if="${quiz.publishedStatus == 1}" class="btn btn-primary btn-sm" >Published</span>
-                        <span th:if="${quiz.publishedStatus != 1}" class="btn btn-secondary btn-sm" >Not published</span>
-                    </td>
-                    <td th:text="${quiz.creationDate}"></td>
-                    <td>
-                        <a th:href="@{/quiz/edit/{id}(id=${quiz.quizId})}" class="btn btn-warning">
-                            Edit
-                        </a>
-                    </td>
-                    <td>
-                        <a th:href="@{/quiz/delete/{id}(id=${quiz.quizId})}" class="btn btn-danger"
-                            onclick="return confirm('Are you sure you want to delete this quiz?');">
-                            Delete
-                        </a>
-                    </td>
-                    <td>
-                        <a th:href="@{/quiz/results/{id}(id=${quiz.quizId})}" class="btn btn-primary">
-                            Results
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <a href="/addquiz"><button type="button" class="btn btn-success">add a quiz</button></a>
-        <a href="/categorylist"><button type="button" class="btn btn-primary">View Categories</button></a>
+      <h1>Quizzers</h1>
+      <table class="table">
+        <thead>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Course</th>
+          <th>Category</th>
+          <th>Published</th>
+          <th>Date</th>
+          <th></th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr th:each="quiz : ${quizzes}">
+            <td>
+              <a
+                th:href="@{/quiz/{id}/questions(id=${quiz.quizId})}"
+                th:text="${quiz.name}"
+              ></a>
+            </td>
+            <td th:text="${quiz.description}"></td>
+            <td th:text="${quiz.courseCode}"></td>
+            <td th:text="${quiz.category?.name}"></td>
+            <td>
+              <span
+                th:if="${quiz.publishedStatus == 1}"
+                class="btn btn-primary btn-sm"
+                >Published</span
+              >
+              <span
+                th:if="${quiz.publishedStatus != 1}"
+                class="btn btn-secondary btn-sm"
+                >Not published</span
+              >
+            </td>
+            <td th:text="${quiz.creationDate}"></td>
+            <td>
+              <a
+                th:href="@{/quiz/edit/{id}(id=${quiz.quizId})}"
+                class="btn btn-warning"
+              >
+                Edit
+              </a>
+            </td>
+            <td>
+              <a
+                th:href="@{/quiz/delete/{id}(id=${quiz.quizId})}"
+                class="btn btn-danger"
+                onclick="return confirm('Are you sure you want to delete this quiz?');"
+              >
+                Delete
+              </a>
+            </td>
+            <td>
+              <a
+                th:href="@{/quiz/results/{id}(id=${quiz.quizId})}"
+                class="btn btn-primary"
+              >
+                Results
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="/addquiz"
+        ><button type="button" class="btn btn-success">add a quiz</button></a
+      >
+      <a href="/categorylist"
+        ><button type="button" class="btn btn-primary">
+          View Categories
+        </button></a
+      >
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
-        </script>
-</body>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
