@@ -1,8 +1,10 @@
 # Quizzler
 
 Quizzer is a web application designed for teachers to create and manage quizzes and for students to take quizzes and receive feedback. The project follows Scrum methodology and is developed in three sprints. The project is built with Java Spring Boot (backend) and JavaScript React (frontend).
-
-https://software-development-project-1-git-quizzer.2.rahtiapp.fi 
+### Backend:
+https://software-development-project-1-git-quizzer.2.rahtiapp.fi
+### Frontend:
+https://quizzer-2pnf.onrender.com/
 
 ## 🧩 Features
 ### For Teachers:
